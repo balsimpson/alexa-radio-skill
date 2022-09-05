@@ -188,11 +188,16 @@ app: {
         // <link rel="stylesheet" href="https://myawesome-lib.css">
         // { rel: 'stylesheet', href: 'https://awesome-lib.css' }
       ],
-      // please note that this is an area that is likely to change
       style: [
         // <style type="text/css">:root { color: red }</style>
         // { children: ':root { color: red }', type: 'text/css' }
       ]
     }
   },
+```
+
+## Add Icons to your projectId
+```bash
+# Install @iconify-prerendered Box Icons
+npm install --save-dev @iconify-prerendered/vue-bx
 ```
