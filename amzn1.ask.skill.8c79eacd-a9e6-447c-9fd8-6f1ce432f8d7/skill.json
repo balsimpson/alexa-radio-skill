@@ -1,0 +1,161 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-CA": {
+          "summary": "The Alexa Skill allows you to customize and manage a personal playlist of audio streams through a web page and listen to them.",
+          "examplePhrases": [
+            "Alexa open juke box",
+            "play juke box",
+            "start juke box"
+          ],
+          "keywords": [
+            "stream",
+            "radio",
+            "juke",
+            "box"
+          ],
+          "name": "Juke Box",
+          "description": "The Alexa Skill lets you create and customize a personal playlist of audio streams that you can access and listen to through voice commands on your Amazon device. The playlist can be easily managed through a web page, where you can add new audio streams, edit or delete existing ones, and organize them in any order you like. Whether you want to listen to your favorite music, podcasts, or live radio broadcasts, this Skill makes it convenient and easy to access your audio content whenever you want. Simply ask Alexa to play your playlist, skip to the next track, or pause the audio at any time.",
+          "smallIconUri": "file://assets/images/en-CA_smallIconUri.png",
+          "largeIconUri": "file://assets/images/en-CA_largeIconUri.png"
+        },
+        "en-US": {
+          "summary": "The Alexa Skill allows you to customize and manage a personal playlist of audio streams through a web page and listen to them.",
+          "examplePhrases": [
+            "Alexa open juke box",
+            "play juke box",
+            "start juke box"
+          ],
+          "keywords": [
+            "stream",
+            "radio",
+            "juke",
+            "box"
+          ],
+          "name": "Juke Box",
+          "description": "The Alexa Skill lets you create and customize a personal playlist of audio streams that you can access and listen to through voice commands on your Amazon device. The playlist can be easily managed through a web page, where you can add new audio streams, edit or delete existing ones, and organize them in any order you like. Whether you want to listen to your favorite music, podcasts, or live radio broadcasts, this Skill makes it convenient and easy to access your audio content whenever you want. Simply ask Alexa to play your playlist, skip to the next track, or pause the audio at any time.",
+          "smallIconUri": "file://assets/images/en-US_smallIconUri.png",
+          "largeIconUri": "file://assets/images/en-US_largeIconUri.png"
+        },
+        "en-IN": {
+          "summary": "The Alexa Skill allows you to customize and manage a personal playlist of audio streams through a web page and listen to them.",
+          "examplePhrases": [
+            "Alexa open juke box",
+            "play juke box",
+            "start juke box"
+          ],
+          "keywords": [
+            "stream",
+            "radio",
+            "juke",
+            "box"
+          ],
+          "name": "Juke Box",
+          "description": "The Alexa Skill lets you create and customize a personal playlist of audio streams that you can access and listen to through voice commands on your Amazon device. The playlist can be easily managed through a web page, where you can add new audio streams, edit or delete existing ones, and organize them in any order you like. Whether you want to listen to your favorite music, podcasts, or live radio broadcasts, this Skill makes it convenient and easy to access your audio content whenever you want. Simply ask Alexa to play your playlist, skip to the next track, or pause the audio at any time.",
+          "smallIconUri": "file://assets/images/en-IN_smallIconUri.png",
+          "largeIconUri": "file://assets/images/en-IN_largeIconUri.png"
+        },
+        "en-AU": {
+          "summary": "The Alexa Skill allows you to customize and manage a personal playlist of audio streams through a web page and listen to them.",
+          "examplePhrases": [
+            "Alexa open juke box",
+            "play juke box",
+            "start juke box"
+          ],
+          "keywords": [
+            "stream",
+            "radio",
+            "juke",
+            "box"
+          ],
+          "name": "Juke Box",
+          "description": "The Alexa Skill lets you create and customize a personal playlist of audio streams that you can access and listen to through voice commands on your Amazon device. The playlist can be easily managed through a web page, where you can add new audio streams, edit or delete existing ones, and organize them in any order you like. Whether you want to listen to your favorite music, podcasts, or live radio broadcasts, this Skill makes it convenient and easy to access your audio content whenever you want. Simply ask Alexa to play your playlist, skip to the next track, or pause the audio at any time.",
+          "smallIconUri": "file://assets/images/en-AU_smallIconUri.png",
+          "largeIconUri": "file://assets/images/en-AU_largeIconUri.png"
+        },
+        "en-GB": {
+          "summary": "The Alexa Skill allows you to customize and manage a personal playlist of audio streams through a web page and listen to them.",
+          "examplePhrases": [
+            "Alexa open juke box",
+            "play juke box",
+            "start juke box"
+          ],
+          "keywords": [
+            "stream",
+            "radio",
+            "juke",
+            "box"
+          ],
+          "name": "Juke Box",
+          "description": "The Alexa Skill lets you create and customize a personal playlist of audio streams that you can access and listen to through voice commands on your Amazon device. The playlist can be easily managed through a web page, where you can add new audio streams, edit or delete existing ones, and organize them in any order you like. Whether you want to listen to your favorite music, podcasts, or live radio broadcasts, this Skill makes it convenient and easy to access your audio content whenever you want. Simply ask Alexa to play your playlist, skip to the next track, or pause the audio at any time.",
+          "smallIconUri": "file://assets/images/en-GB_smallIconUri.png",
+          "largeIconUri": "file://assets/images/en-GB_largeIconUri.png"
+        }
+      },
+      "automaticDistribution": {
+        "isActive": false
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "STREAMING_SERVICE",
+      "automaticClonedLocale": {
+        "locales": [
+          {
+            "source": "en-IN"
+          }
+        ]
+      },
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:742241267456:function:8c79eacd-a9e6-447c-9fd8-6f1ce432f8d7:Release_0"
+        },
+        "interfaces": [
+          {
+            "type": "AUDIO_PLAYER"
+          }
+        ],
+        "regions": {
+          "EU": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:eu-west-1:742241267456:function:8c79eacd-a9e6-447c-9fd8-6f1ce432f8d7:Release_0"
+            }
+          },
+          "NA": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-east-1:742241267456:function:8c79eacd-a9e6-447c-9fd8-6f1ce432f8d7:Release_0"
+            }
+          },
+          "FE": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-west-2:742241267456:function:8c79eacd-a9e6-447c-9fd8-6f1ce432f8d7:Release_0"
+            }
+          }
+        }
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [],
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "en-CA": {},
+        "en-US": {},
+        "en-IN": {},
+        "en-AU": {},
+        "en-GB": {}
+      },
+      "containsAds": false,
+      "isExportCompliant": true,
+      "isChildDirected": false,
+      "shoppingKit": {
+        "isShoppingActionsEnabled": false,
+        "isAmazonAssociatesOnAlexaEnabled": false
+      },
+      "usesPersonalInfo": false
+    }
+  }
+}

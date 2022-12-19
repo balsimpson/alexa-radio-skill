@@ -1,0 +1,54 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "juke box",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "PlayMediaIntent",
+          "slots": [
+            {
+              "name": "SEARCH_TERM",
+              "type": "AMAZON.RadioChannel"
+            }
+          ],
+          "samples": [
+            "for {SEARCH_TERM}",
+            "play {SEARCH_TERM}",
+            "play some {SEARCH_TERM}",
+            "read me {SEARCH_TERM} "
+          ]
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "9"
+}

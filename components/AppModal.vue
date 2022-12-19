@@ -5,9 +5,10 @@
     <!-- <div class="relative w-auto max-w-lg mx-auto pointer-events-none ">
     </div> -->
     <div
-      class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-800 bg-clip-padding text-stone-400">
+      class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-800 text-stone-400">
       <div class="flex items-start justify-between flex-shrink-0 p-4 border-b border-stone-700 rounded-t-md">
         <div class="">
+          <pre>{{ item }}</pre>
           <h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-500">
             Add a channel
           </h3>
@@ -62,10 +63,10 @@
 
 
         <div class="p-4 mt-4 border-t border-stone-600">
-          <h3 class="text-lg font-bold text-cyan-600 dark:text-cyan-500">
-            Stations <span class="px-2 ml-2 text-white rounded bg-cyan-600">{{ addedStations.length }}</span>
+          <h3 class="text-lg font-bold text-cyan-600 ">
+            Stations <span class="px-2 ml-2 text-white rounded bg-cyan-600">{{ addedStations?.length }}</span>
           </h3>
-          <div v-if="addedStations.length > 0">
+          <div v-if="addedStations?.length > 0">
             <draggable tag="ul" :list="addedStations" class="space-y-2 list-group" handle=".handle" item-key="order">
               <template #item="{ element, index }">
                 <div class="w-full p-2 text-white rounded bg-cyan-800">
@@ -111,7 +112,7 @@
 import draggable from 'vuedraggable'
 import { IconXCircle, IconX, IconMenu } from "@iconify-prerendered/vue-bx";
 
-const props = defineProps(["isActive"])
+const props = defineProps(["isActive", "item"])
 const emit = defineEmits(["save", "close"])
 
 const drag = ref(false);
@@ -124,8 +125,8 @@ const dragOptions = computed(() => {
   };
 })
 
-const channelName = ref("")
-const addedStations = ref([]);
+const channelName = ref(props.item.name || "")
+const addedStations = ref(props.item.stations || []);
 const stationName = ref("")
 const stationURL = ref("")
 
@@ -153,6 +154,22 @@ const saveChannel = () => {
 
   emit("save", channel)
 }
+
+onMounted(() => {
+  // console.log("mounted modal", props.item)
+  // addedStations.value = props.item.stations || [];
+  // channelName.value = props.item.name || "";
+  // if (props.item && props.item.stations) {
+  // } 
+  // else {
+  //   channelName.value = "";
+  //   addedStations.value = [];
+  // }
+})
+
+onUnmounted(() => {
+  console.log("unmounted")
+})
 </script>
 
 <style>

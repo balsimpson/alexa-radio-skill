@@ -30,8 +30,4 @@ You will use these credentials to login to your website.
 For free website hosting, we'll use VErcel. Deploying the website could not be easier. Create a new project and just import the github repository.
 
 ### Add Environment variables
-Add the Firebase Project Id and Project Name to the environment variables
-
-
-
-
+Add the Firebase Project Id and Project Name to the environment variables.
