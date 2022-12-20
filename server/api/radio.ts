@@ -20,13 +20,15 @@ export default defineEventHandler( async (event) => {
   // get library
   const library = await getDocsFromFirestore("channels");
 
-  console.log(library);
+  // console.log(library);
   // Launch
     // play recently played
     // else play random channel
 
   // Play Intent - search
+  if (query.search) {
     // get channel
+    console.log(JSON.stringify(library))
       // if recentlyPlayed, return that
       // else if shuffle is on, return random station
         // else return first station 
@@ -34,6 +36,8 @@ export default defineEventHandler( async (event) => {
       // if station, return station
 
     // if no track found, return error
+
+  }
 
   // Next
     // get channel from token
