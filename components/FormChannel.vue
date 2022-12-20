@@ -1,13 +1,13 @@
 <template>
   <div
-    class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-800 text-stone-400">
-    <div class="flex items-start justify-between flex-shrink-0 p-4 border-b border-stone-700 rounded-t-md">
+    class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-[#EDEBD5] text-stone-400">
+    <div class="flex items-start justify-between flex-shrink-0 p-4 border-b border-[#7C3D13]/80 rounded-t-md text-[#7C3D13]">
       <div class="">
         <!-- <pre>{{ item }}</pre> -->
-        <h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-500">
+        <h3 class="text-2xl font-bold text-[#7C3D13]">
           {{ item.uid ? "Edit channel" : "Add a channel" }}
         </h3>
-        <p class="mt-1 text-sm text-stone-400">
+        <p class="mt-1 text-sm ">
           A channel is a collection of stations.
         </p>
       </div>
@@ -17,19 +17,19 @@
         <IconX />
       </button>
     </div>
-    <div class="relative flex-auto p-2 overflow-y-auto">
+    <div class="relative flex-auto p-2 overflow-y-auto text-[#7C3D13]">
 
       <div class="p-3">
         <label class="block mb-1 text-sm font-bold" for="name">
           What is the name of your Channel?
         </label>
         <input
-          class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-200 border-stone-500 focus:outline-none focus:shadow-outline bg-stone-600"
+          class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-[#7C3D13] border-[#7C3D13] focus:outline-none focus:shadow-outline bg-[#ffffff]"
           type="text" placeholder="Enter channel name" v-model="item.name" />
       </div>
 
       <div class="p-2 px-3 mt-3 border-t border-stone-600">
-        <h3 class="text-xl font-bold text-cyan-600 dark:text-cyan-500">
+        <h3 class="text-xl font-bold">
           Add a station
         </h3>
         <p class="text-sm ">
@@ -40,7 +40,7 @@
             What is the name of the Station?
           </label>
           <input
-            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-200 border-stone-500 focus:outline-none focus:shadow-outline bg-stone-600"
+            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-[#7C3D13] border-[#7C3D13] focus:outline-none focus:shadow-outline bg-[#ffffff]"
             type="text" placeholder="Enter station name" v-model="stationName" />
         </div>
         <div class="mt-2">
@@ -48,30 +48,30 @@
             What is the URL of the Station?
           </label>
           <input
-            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-200 border-stone-500 focus:outline-none focus:shadow-outline bg-stone-600"
+            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-[#7C3D13] border-[#7C3D13] focus:outline-none focus:shadow-outline bg-[#ffffff]"
             type="url" placeholder="Enter station URL" v-model="stationURL" />
         </div>
         <button @click.prevent="addStation(stationName, stationURL)"
-          class="px-3 py-1 mt-2 text-xs font-bold border rounded-full text-cyan-600 border-cyan-800 hover:border-cyan-400 active:border-cyan-400">Add
+          class="px-3 py-1 mt-2 text-xs font-bold border rounded-full text-[#7C3D13] border-[#7C3D13] hover:border-cyan-400 active:border-cyan-400">Add
           Station</button>
       </div>
 
 
       <div class="p-4 mt-4 border-t border-stone-600">
-        <h3 class="text-lg font-bold text-cyan-600 ">
-          Stations <span v-if="addedStations?.length > 0" class="px-2 ml-2 text-white rounded bg-cyan-600">{{ addedStations?.length }}</span>
+        <h3 class="text-lg font-bold text-[#7C3D13] ">
+          Stations <span v-if="addedStations?.length > 0" class="px-2 ml-2 text-white rounded bg-[#7C3D13]">{{ addedStations?.length }}</span>
         </h3>
         <div v-if="item && addedStations?.length > 0">
           <draggable tag="ul" :list="addedStations" class="space-y-2 list-group" handle=".handle" item-key="order">
             <template #item="{ element, index }">
-              <div class="w-full p-2 text-white rounded bg-cyan-800">
-                <div class="flex items-center justify-between">
-                  <div>
+              <div class="w-full p-2 rounded text-[#7C3D13] border-[#7C3D13] border-2 bg-[#EDEBD5]">
+                <div class="flex justify-between h-full">
+                  <div class="w-10/12 shrink-0">
                     <div class="text-xl font-semibold tracking-wide break-words">{{ element.name }}</div>
                     <div class="w-full text-sm break-words">{{ element.url }}</div>
                   </div>
 
-                  <div class="shrink-0">
+                  <div class="flex flex-col justify-between shrink-0">
                     <IconXCircle @click.prevent="deleteStation(element.url)" />
                     <IconMenu class="cursor-pointer handle" />
                   </div>
@@ -99,12 +99,12 @@
       </button>
       <button v-if="item.uid" @click="updateChannel(item)" type="button"
         class="sm:inline-block w-full px-6 py-2.5 bg-teal-600 text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-700 hover:shadow-lg focus:bg-teal-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-800 active:shadow-lg transition duration-150 ease-in-out"
-        :class="[(item.name && item.stations.length > 0) ? 'opacity-100' : 'opacity-50 pointer-events-none']">
+        :class="[(item.name && item.stations?.length > 0) ? 'opacity-100' : 'opacity-50 pointer-events-none']">
         {{ item.uid ? 'Update Channel' : 'Add Channel' }}
       </button>
       <button v-else @click="addChannel(item)" type="button"
         class="sm:inline-block w-full px-6 py-2.5 bg-cyan-600 text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out"
-        :class="[(item.name && item.stations.length > 0) ? 'opacity-100' : 'opacity-50 pointer-events-none']">
+        :class="[(item.name && addedStations?.length > 0) ? 'opacity-100' : 'opacity-50 pointer-events-none']">
         {{ item.uid ? 'Update Channel' : 'Add Channel' }}
       </button>
 

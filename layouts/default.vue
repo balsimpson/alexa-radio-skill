@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full min-h-screen bg-stone-900 text-stone-300">
-    <div class="sticky top-0 z-20 px-4 py-6 sm:px-6 lg:px-8 bg-stone-900">
+  <div class="w-full min-h-screen bg-[#EE9A8F] text-stone-300">
+    <div class="sticky top-0 z-20 px-4 py-6 sm:px-6 lg:px-8 bg-[#EE9A8F]">
       <nav class="relative flex items-center justify-between max-w-4xl mx-auto "
         aria-label="Global">
         <!-- <IconRadio class="w-12 h-12" /> -->

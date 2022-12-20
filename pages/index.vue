@@ -1,40 +1,59 @@
 <template>
-	<div class="max-w-xl mx-auto ">
-		<div
-			class="mt-8 text-3xl font-semibold tracking-wide text-center text-transparent text-clip bg-gradient-to-br from-amber-400 to-red-600 bg-clip-text">
-			Alexa Radio Skill</div>
-		<div class="px-4 mt-4 text-sm text-center font-arvo">
-			Alexa Audio Player supports AAC/MP4, MP3, HLS, PLS and M3U audio streams ranging from 16kbps to 384kbps.
-			Make sure the stream URL starts with https
+	<div>
+		<div class="bg-[#EE9A8F] w-full flex items-center justify-center py-12 flex-col sm:flex-row">
+
+			<div class="relative w-1/3 shrink-0">
+				<img src="hero_jukebox.png" alt="">
+				<IconMusicNote class="absolute w-12 h-12 -top-6 right-4 rotate-6 animate-pulse" />
+				<IconMusicNote class="absolute w-12 h-12 top-6 left-8 rotate-6 animate-pulse" />
+				<IconMusic class="absolute w-12 h-12 -top-4 left-4 -rotate-6 animate-pulse" />
+			</div>
+			<div class="max-w-sm px-3 text-center sm:text-left">
+				<div class="text-5xl font-bold font-arvo text-[#7C3D13]"> <span
+						class="mt-8 text-5xl font-semibold tracking-wide text-center text-transparent text-clip bg-gradient-to-br from-[#57B8A3] to-[#094d3e] bg-clip-text">
+						Upgrade
+					</span> your music game
+				</div>
+				<p class="text-[#7C3D13] mt-2 font-medium">Easily deploy your own Alexa skill and customize it with your
+					favorite streaming
+					radio stations.</p>
+				<div class="flex items-center justify-center mt-3 space-x-3 sm:justify-start">
+					<button @click.prevent="showModal({})" class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-stone-200 bg-[#7C3D13]">Add
+						Channel</button>
+					<button class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-[#7C3D13]">Get Started</button>
+				</div>
+			</div>
+
 		</div>
+		<div class="max-w-xl mx-auto text-center">
+			<div class="text-2xl font-bold font-arvo text-[#7C3D13]">Your Channels
+			</div>
+			<div class="px-4 mt-4 text-sm text-center font-arvo text-[#7C3D13]">
+				Alexa Audio Player supports AAC/MP4, MP3, HLS, PLS and M3U audio streams ranging from 16kbps to 384kbps.
+				Make sure the stream URL starts with https
+			</div>
 
-		<div class="mt-6 text-center">
-			<button @click="showModal({})" class="px-3 py-1 font-bold text-black rounded bg-amber-600">
-				Add Channel
-			</button>
+			<div v-if="channels" class="py-12 text-left">
+				<div class="px-4 space-y-3">
+					<div v-for="channel in channels" class="p-3 bg-[#EDEBD5] border rounded border-[#7C3D13]/70 shadow-sm">
+						<div class="flex items-center justify-between">
+							<div class="flex items-center">
+								<IconMusicBoxMultiple class="w-6 h-6 opacity-40 text-[#7C3D13]" />
+								<div class="ml-2 text-2xl font-bold text-[#7C3D13]">{{ channel.name }}</div>
+							</div>
 
-		</div>
-
-		<div v-if="channels" class="py-12">
-			<div class="px-4 space-y-3">
-				<div v-for="channel in channels" class="p-2 border rounded bg-stone-800 border-stone-700">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center">
-							<IconMusicBoxMultiple class="w-6 h-6 opacity-40" />
-							<div class="ml-2 text-2xl font-bold text-amber-600">{{ channel.name }}</div>
+							<button @click.prevent="showModal(channel)" class="opacity-40 hover:opacity-100">
+								<svg class="w-4 h-4 text-[#7C3D13] fill-current" viewBox="0 0 24 24">
+									<path
+										d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+								</svg>
+							</button>
 						</div>
-
-						<button @click.prevent="showModal(channel)" class="opacity-40 hover:opacity-100">
-							<svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
-								<path
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-							</svg>
-						</button>
-					</div>
-					<div class="mt-2 space-y-2">
-						<div v-for="station in channel.stations" class="w-full p-2 rounded text-stone-100/50 bg-stone-700">
-							<div class="text-xl font-semibold tracking-wide break-words">{{ station.name }}</div>
-							<div class="text-sm break-words">{{ station.url }}</div>
+						<div class="mt-2 space-y-2">
+							<div v-for="station in channel.stations" class="w-full p-2 rounded text-[#7C3D13] border-[#7C3D13] border-2">
+								<div class="text-xl font-semibold tracking-wide break-words">{{ station.name }}</div>
+								<div class="text-sm break-words">{{ station.url }}</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -153,7 +172,7 @@
 
 <script setup>
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu } from "@iconify-prerendered/vue-bx";
-import { IconMusicBoxMultiple } from "@iconify-prerendered/vue-mdi";
+import { IconMusicBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
 import draggable from 'vuedraggable'
 const channels = ref([])
 const isModalActive = ref(false)
@@ -161,7 +180,7 @@ const channelToEdit = ref({})
 
 const addChannel = async (data) => {
 	let res = await addDocToFirestore("channels", data);
-	isModalActive.value = !isModalActive
+	isModalActive.value = !isModalActive.value;
 	console.log(data, res);
 }
 
@@ -178,8 +197,8 @@ const deleteChannel = () => {
 onMounted(async () => {
 	channels.value = await getDocsFromFirestore("channels")
 
-	let res = await getDocsFromFirestore("library")
-	console.log(res);
+	// let res = await getDocsFromFirestore("library")
+	// console.log(res);
 })
 </script>
 
