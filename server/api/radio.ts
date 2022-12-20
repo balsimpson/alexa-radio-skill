@@ -6,7 +6,8 @@ export default defineEventHandler( async (event) => {
   // console.log("body", body)
   console.log("query", query)
   return {
-    name: "Blues",
+    channel: "Blues",
+    station: "Acoustic Blues",
     url: "https://stream-39.zeno.fm/agtp9c146qzuv?zs=azWAiz9SQTCC2pjV4LgLUg"
   }
 })

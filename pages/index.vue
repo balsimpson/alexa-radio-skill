@@ -1,6 +1,9 @@
 <template>
 	<div class="max-w-xl mx-auto ">
-		<div class="px-4 mt-12 text-sm text-center font-arvo">
+		<div
+			class="mt-8 text-3xl font-semibold tracking-wide text-center text-transparent text-clip bg-gradient-to-br from-amber-400 to-red-600 bg-clip-text">
+			Alexa Radio Skill</div>
+		<div class="px-4 mt-4 text-sm text-center font-arvo">
 			Alexa Audio Player supports AAC/MP4, MP3, HLS, PLS and M3U audio streams ranging from 16kbps to 384kbps.
 			Make sure the stream URL starts with https
 		</div>
@@ -17,14 +20,19 @@
 				<div v-for="channel in channels" class="p-2 border rounded bg-stone-800 border-stone-700">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center">
-							<IconBxAlbum />
-							<div class="ml-2 text-2xl font-bold">{{ channel.name }}</div>
+							<IconMusicBoxMultiple class="w-6 h-6 opacity-40" />
+							<div class="ml-2 text-2xl font-bold text-amber-600">{{ channel.name }}</div>
 						</div>
 
-						<div @click.prevent="showModal(channel)" class="cursor-pointer">Edit</div>
+						<button @click.prevent="showModal(channel)" class="opacity-40 hover:opacity-100">
+							<svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
+								<path
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+							</svg>
+						</button>
 					</div>
 					<div class="mt-2 space-y-2">
-						<div v-for="station in channel.stations" class="w-full p-2 text-white rounded bg-stone-700">
+						<div v-for="station in channel.stations" class="w-full p-2 rounded text-stone-100/50 bg-stone-700">
 							<div class="text-xl font-semibold tracking-wide break-words">{{ station.name }}</div>
 							<div class="text-sm break-words">{{ station.url }}</div>
 						</div>
@@ -33,12 +41,11 @@
 			</div>
 		</div>
 
-		<AppModalTest :isActive="isModalActive" :item="channelToEdit">
+		<!-- <AppModalTest :isActive="isModalActive">
 			<div
 				class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-800 text-stone-400">
 				<div class="flex items-start justify-between flex-shrink-0 p-4 border-b border-stone-700 rounded-t-md">
 					<div class="">
-						<pre>{{ item }}</pre>
 						<h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-500">
 							Add a channel
 						</h3>
@@ -134,22 +141,25 @@
 
 				</div>
 			</div>
-		</AppModalTest>
+		</AppModalTest> -->
 
+		<AppModalTest :is-active="isModalActive">
+			<FormChannel @close="isModalActive = !isModalActive" @delete="deleteChannel" @add="addChannel($event)"
+				@update="updateChannel($event)" :item="channelToEdit" />
+
+		</AppModalTest>
 	</div>
 </template>
 
 <script setup>
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu } from "@iconify-prerendered/vue-bx";
+import { IconMusicBoxMultiple } from "@iconify-prerendered/vue-mdi";
 import draggable from 'vuedraggable'
 const channels = ref([])
 const isModalActive = ref(false)
 const channelToEdit = ref({})
 
-const stationName = ref("")
-const stationURL = ref("")
-
-const saveChannel = async (data) => {
+const addChannel = async (data) => {
 	let res = await addDocToFirestore("channels", data);
 	isModalActive.value = !isModalActive
 	console.log(data, res);
@@ -161,8 +171,15 @@ const showModal = (val) => {
 	isModalActive.value = !isModalActive.value;
 }
 
+const deleteChannel = () => {
+
+}
+
 onMounted(async () => {
 	channels.value = await getDocsFromFirestore("channels")
+
+	let res = await getDocsFromFirestore("library")
+	console.log(res);
 })
 </script>
 
