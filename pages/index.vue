@@ -3,7 +3,7 @@
 		<div class="bg-[#EE9A8F] w-full flex items-center justify-center py-12 flex-col sm:flex-row">
 
 			<div class="relative w-1/3 shrink-0">
-				<img src="hero_jukebox.png" alt="">
+				<img src="/hero_jukebox.png" alt="">
 				<IconMusicNote class="absolute w-12 h-12 -top-6 right-4 rotate-6 animate-pulse" />
 				<IconMusicNote class="absolute w-12 h-12 top-6 left-8 rotate-6 animate-pulse" />
 				<IconMusic class="absolute w-12 h-12 -top-4 left-4 -rotate-6 animate-pulse" />
