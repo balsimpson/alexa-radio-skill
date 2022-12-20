@@ -1,10 +1,20 @@
-import { getDocsFromFirestore } from "~~/composables/useFirebase"
+import { initializeApp } from "firebase/app";
+// import { getAuth } from "firebase/auth";
 
 export default defineEventHandler( async (event) => {
   // const config = useRuntimeConfig()
   // const body = await readBody(event)
   const query = getQuery(event)
 
+  const config = useRuntimeConfig();
+
+  const firebaseConfig = {
+    apiKey: config.FIREBASE_API_KEY,
+    projectId: config.FIREBASE_PROJECT_ID,
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
   // get library
   const library = await getDocsFromFirestore("channels");
