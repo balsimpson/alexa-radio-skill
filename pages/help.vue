@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-2xl px-2 mx-auto ">
-    <ContentRenderer :value="data" class="prose prose-invert"/>
+    <ContentRenderer :value="data" class="prose "/>
   </div>
 </template>
 

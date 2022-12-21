@@ -8,7 +8,7 @@
           <img src="/favicon.png" alt="" class="w-12">
         </NuxtLink>
 
-        <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-6 text-[#7C3D13]">
           <NuxtLink to="/help">
             <IconBxHelpCircle class="w-12 h-12 transition" />
           </NuxtLink>

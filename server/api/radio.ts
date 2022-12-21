@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
 import { getDocsFromFirestore } from "~~/composables/useFirebase";
 
-export default defineEventHandler( async (event) => {
+export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()
   // const body = await readBody(event)
   const query = getQuery(event)
@@ -18,33 +18,51 @@ export default defineEventHandler( async (event) => {
   const app = initializeApp(firebaseConfig);
 
   // get library
-  const library = await getDocsFromFirestore("channels");
+  const channels = await getDocsFromFirestore("channels");
 
+  let allStations = []
+
+  channels.map((channel: { name: any; stations: any[]; }) => {
+    let channelName = channel.name
+    channel.stations.map(station => {
+      station.channel = channelName
+      allStations.push(station)
+    })
+  })
+
+  let searchChannels = fuzzy(channels, 'name');
+  let searchStations = fuzzy(allStations, 'name');
+
+  
   // console.log(library);
   // Launch
-    // play recently played
-    // else play random channel
-
+  // play recently played
+  // else play random channel
+  let channel;
+  let station;
+  
   // Play Intent - search
   if (query.search) {
+    channel = searchChannels(query.search)
+    station = searchStations(query.search)
     // get channel
-    console.log(JSON.stringify(library))
-      // if recentlyPlayed, return that
-      // else if shuffle is on, return random station
-        // else return first station 
+    // console.log(JSON.stringify(library))
+    // if recentlyPlayed, return that
+    // else if shuffle is on, return random station
+    // else return first station 
     // get station
-      // if station, return station
+    // if station, return station
 
     // if no track found, return error
 
   }
 
   // Next
-    // get channel from token
-      // if shuffle on, return random station
-      // else return next station
+  // get channel from token
+  // if shuffle on, return random station
+  // else return next station
 
-      //  if no next station, return error
+  //  if no next station, return error
 
   // Queue
 
@@ -59,8 +77,8 @@ export default defineEventHandler( async (event) => {
   // console.log("body", body)
   console.log("query", query)
   return {
-    channel: "Blues",
-    station: "Acoustic Blues",
+    channel: channel,
+    station: station.name,
     url: "https://stream-39.zeno.fm/agtp9c146qzuv?zs=azWAiz9SQTCC2pjV4LgLUg"
   }
 })

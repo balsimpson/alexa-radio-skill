@@ -88,7 +88,7 @@
     <div
     class="flex flex-wrap items-center justify-center flex-shrink-0 p-4 space-y-2 border-t border-stone-700 rounded-b-md">
     <div class="flex justify-between w-full">
-      <button v-if="item.uid" class="sm:inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out">delete</button>
+      <button v-if="item.uid" @click="deleteChannel(item.uid)" class="sm:inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out">delete channel</button>
       <ToggleSwitch @toggled="isShuffleOn=!isShuffleOn" checked="Shuffle ON" unchecked="Shuffle OFF"
           :status="false" />
     </div>

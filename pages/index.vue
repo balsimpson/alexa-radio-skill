@@ -4,8 +4,8 @@
 
 			<div class="relative w-1/3 shrink-0">
 				<img src="/hero_jukebox.png" alt="">
-				<IconMusicNote class="absolute w-12 h-12 -top-6 right-4 rotate-6 animate-pulse" />
-				<IconMusicNote class="absolute w-12 h-12 top-6 left-8 rotate-6 animate-pulse" />
+				<IconMusicNote class="absolute w-12 h-12 delay-300 -top-6 right-4 rotate-6 animate-pulse" />
+				<IconMusicNote class="absolute w-12 h-12 delay-150 top-6 left-8 animate-pulse -rotate-12" />
 				<IconMusic class="absolute w-12 h-12 -top-4 left-4 -rotate-6 animate-pulse" />
 			</div>
 			<div class="max-w-sm px-3 text-center sm:text-left">
@@ -21,6 +21,7 @@
 					<button @click.prevent="showModal({})" class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-stone-200 bg-[#7C3D13]">Add
 						Channel</button>
 					<button class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-[#7C3D13]">Get Started</button>
+					<button @click="showToast">toast</button>
 				</div>
 			</div>
 
@@ -174,6 +175,9 @@
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu } from "@iconify-prerendered/vue-bx";
 import { IconMusicBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
 import draggable from 'vuedraggable'
+import { useToast } from "vue-toastification";
+const toast = useToast();
+
 const channels = ref([])
 const isModalActive = ref(false)
 const channelToEdit = ref({})
@@ -190,8 +194,19 @@ const showModal = (val) => {
 	isModalActive.value = !isModalActive.value;
 }
 
-const deleteChannel = () => {
+const deleteChannel = async (id) => {
 
+	let res = await deleteDocFromFirestore("channels", id);
+	console.log(res)
+	toast.success(`Deleted channel`, {
+        timeout: 5000
+      });
+}
+
+const showToast = () => {
+	toast.error(`Deleted channel`, {
+        timeout: 5000
+      });
 }
 
 onMounted(async () => {

@@ -17,6 +17,7 @@
     "nuxt": "3.0.0-rc.9"
   },
   "dependencies": {
+    "vue-toastification": "^2.0.0-rc.5",
     "vuedraggable": "^4.1.0"
   }
 }
