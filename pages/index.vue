@@ -21,7 +21,6 @@
 					<button @click.prevent="showModal({})" class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-stone-200 bg-[#7C3D13]">Add
 						Channel</button>
 					<button class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-[#7C3D13]">Get Started</button>
-					<button @click="showToast">toast</button>
 				</div>
 			</div>
 
@@ -175,8 +174,8 @@
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu } from "@iconify-prerendered/vue-bx";
 import { IconMusicBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
 import draggable from 'vuedraggable'
-import { useToast } from "vue-toastification";
-const toast = useToast();
+// import useToast from "vue-toastification";
+// const toast = useToast();
 
 const channels = ref([])
 const isModalActive = ref(false)
@@ -198,9 +197,6 @@ const deleteChannel = async (id) => {
 
 	let res = await deleteDocFromFirestore("channels", id);
 	console.log(res)
-	toast.success(`Deleted channel`, {
-        timeout: 5000
-      });
 }
 
 const showToast = () => {

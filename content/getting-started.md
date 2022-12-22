@@ -17,7 +17,7 @@ When you create a new Web app, Firebase will create credentials that you can use
 ### Step 3 - Create database
 We will be storing all our data in Firebase and that requires you to create a database. You don't need to add any data, just initialize it so Firebase will provision it for you.
 
-### Step 4 - Update Firestore rules
+## Step 4 - Update Firestore rules
 This will ensure that only logged in users will have access to the data.
 
 ### Step 5 - Enanble Authentication
