@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
   let searchChannels = fuzzy(channels, 'name');
   let searchStations = fuzzy(allStations, 'name');
 
-  
+  console.log("query", query)
   // console.log(library);
   // Launch
   // play recently played
@@ -76,17 +76,22 @@ export default defineEventHandler(async (event) => {
   // Queue
   if (query.queue) {
     console.log(query.queue)
+    return 
   }
-
+  
   // Stop
-
+  if (query.stop) {
+    console.log(query.stop)
+    return 
+  }
+  
 
   // Help
 
 
   // console.log("event", event.context, body)
   // console.log("body", body)
-  console.log("query", query)
+  
   return {
     channel: channel,
     station: station
