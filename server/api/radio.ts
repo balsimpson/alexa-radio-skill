@@ -74,7 +74,9 @@ export default defineEventHandler(async (event) => {
   //  if no next station, return error
 
   // Queue
-
+  if (query.queue) {
+    console.log(query.queue)
+  }
 
   // Stop
 
