@@ -77,7 +77,7 @@ export default defineEventHandler(async (event) => {
   if (query.queue) {
     console.log(query.queue)
     // @ts-ignore
-    let channel = searchChannels(query.token.split('::')[0])
+    let channel = searchChannels(query.queue.split('::')[0])
     return randomItem(channel[0].stations)
   }
   
