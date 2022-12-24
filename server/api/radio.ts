@@ -38,15 +38,14 @@ export default defineEventHandler(async (event) => {
   // Launch
   // play recently played
   // else play random channel
-  let channel;
-  let station;
+  let channel = {};
+  let station = {};
   
   // Play Intent - search
   if (query.search) {
     channel = searchChannels(query.search)
     station = searchStations(query.search)
     // get channel
-    // console.log(JSON.stringify(library))
     // if recentlyPlayed, return that
     // else if shuffle is on, return random station
     // else return first station 
@@ -78,7 +77,6 @@ export default defineEventHandler(async (event) => {
   console.log("query", query)
   return {
     channel: channel,
-    station: station.name,
-    url: "https://stream-39.zeno.fm/agtp9c146qzuv?zs=azWAiz9SQTCC2pjV4LgLUg"
+    station: station
   }
 })

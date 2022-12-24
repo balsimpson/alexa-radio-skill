@@ -18,7 +18,8 @@
 					favorite streaming
 					radio stations.</p>
 				<div class="flex items-center justify-center mt-3 space-x-3 sm:justify-start">
-					<button @click.prevent="showModal({})" class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-stone-200 bg-[#7C3D13]">Add
+					<button @click.prevent="showModal({})"
+						class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-stone-200 bg-[#7C3D13]">Add
 						Channel</button>
 					<button class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-[#7C3D13]">Get Started</button>
 				</div>
@@ -50,7 +51,8 @@
 							</button>
 						</div>
 						<div class="mt-2 space-y-2">
-							<div v-for="station in channel.stations" class="w-full p-2 rounded text-[#7C3D13] border-[#7C3D13] border-2">
+							<div v-for="station in channel.stations"
+								class="w-full p-2 rounded text-[#7C3D13] border-[#7C3D13] border-2">
 								<div class="text-xl font-semibold tracking-wide break-words">{{ station.name }}</div>
 								<div class="text-sm break-words">{{ station.url }}</div>
 							</div>
@@ -194,15 +196,19 @@ const showModal = (val) => {
 }
 
 const deleteChannel = async (id) => {
-
 	let res = await deleteDocFromFirestore("channels", id);
+	console.log(res)
+}
+
+const updateChannel = async (channel) => {
+	let res = await updateDocInFirestore("channels", channel.uid, channel)
 	console.log(res)
 }
 
 const showToast = () => {
 	toast.error(`Deleted channel`, {
-        timeout: 5000
-      });
+		timeout: 5000
+	});
 }
 
 onMounted(async () => {
