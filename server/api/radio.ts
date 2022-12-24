@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
 import { getDocsFromFirestore } from "~~/composables/useFirebase";
-import { fuzzy } from "~~/composables/useUtils"
+import { fuzzy, randomItem } from "~~/composables/useUtils"
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()
@@ -39,8 +39,8 @@ export default defineEventHandler(async (event) => {
   // Launch
   // play recently played
   // else play random channel
-  let channel = {};
-  let station = {};
+  let channel = [];
+  let station = [];
   
   // Play Intent - search
   if (query.search) {
@@ -48,8 +48,17 @@ export default defineEventHandler(async (event) => {
     station = searchStations(query.search)
     // get channel
     // if recentlyPlayed, return that
-    // else if shuffle is on, return random station
-    // else return first station 
+    if (channel && channel.length > 0) {
+      if (channel[0].recentlyPlayed) {
+        return channel[0].recentlyPlayed
+      } else if (channel[0].shuffle) {
+        // else if shuffle is on, return random station
+        return randomItem(channel[0].stations)
+      } else {
+        // else return first station 
+        return channel[0].stations[0]
+      }
+    }
     // get station
     // if station, return station
 

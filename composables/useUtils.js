@@ -14,6 +14,27 @@ export const fuzzy = (items, key) => {
   };
 };
 
+// Pick a random item from an array
+export const randomItem = (arrayOfItems) => {
+
+	let type = typeof arrayOfItems;
+
+	let iLen = arrayOfItems.length;
+	let key = 0;
+	let keys;
+
+	if (type === 'object') {
+		keys = Object.keys(arrayOfItems);
+		iLen = keys.length;
+	}
+
+	key = Math.floor(Math.random() * iLen);
+
+	let rand_item = arrayOfItems[keys[key]];
+	return rand_item;
+
+};
+
 export const groupByProp = (items, prop) => {
 
   const groups = {};
