@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
   })
 
   let searchChannels = fuzzy(channels, 'name');
-  let searchStations = fuzzy(allStations, 'name');
+  let searchAllStations = fuzzy(allStations, 'name');
 
   console.log("query", query)
   // console.log(library);
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
   // Play Intent - search
   if (query.search) {
     channel = searchChannels(query.search)
-    station = searchStations(query.search)
+    station = searchAllStations(query.search)
     // get channel
     // if recentlyPlayed, return that
     if (channel && channel.length > 0) {
@@ -76,11 +76,16 @@ export default defineEventHandler(async (event) => {
   // Queue
   if (query.queue) {
     console.log(query.queue)
-    return 
+    // @ts-ignore
+    let channel = searchChannels(query.token.split('::')[0])
+    return randomItem(channel[0].stations)
   }
   
   // Stop
-  if (query.stop) {
+  if (query.token) {
+    // @ts-ignore
+    let channel = searchChannels(query.token.split('::')[0])
+    let searchStations = fuzzy(channel.stations, 'name');
     console.log(query.stop)
     return 
   }
