@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
 import { getDocsFromFirestore } from "~~/composables/useFirebase";
+import { fuzzy } from "~~/composables/useUtils"
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()
