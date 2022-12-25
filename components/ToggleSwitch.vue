@@ -1,6 +1,6 @@
 <template>
   <label for="toggleStatus" class="flex items-center justify-center space-x-3 cursor-pointer">
-    <div class="mt-1 font-bold text-stone-400">{{ displayText }}</div>
+    
     <!-- toggle -->
     <div class="relative flex items-center">
       <!-- input -->
@@ -19,7 +19,7 @@
       ></div>
 
     </div>
-    
+    <div class="mt-1 font-bold text-stone-400">{{ displayText }}</div>
     <!-- label -->
     <!-- <div class="max-w-[200px] mt-2 text-xs font-medium text-gray-700 ">If disabled this component will not show on your homepage</div> -->
   </label>
@@ -60,9 +60,9 @@ onMounted(() => {
 /* Toggle B */
 input:checked ~ .dot {
   transform: translateX(100%);
-  background-color: #0a6f34;
+  background-color: #1397bb;
 }
 input:checked ~ .line {
-  background-color: #6dfeaa;
+  background-color: #1a5a6c;
 }
 </style>

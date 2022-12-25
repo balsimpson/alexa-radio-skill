@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   // else play random channel
   let channel = [];
   let station = [];
-  
+
   // Play Intent - search
   if (query.search) {
     channel = searchChannels(query.search)
@@ -80,23 +80,47 @@ export default defineEventHandler(async (event) => {
     let channel = searchChannels(query.queue.split('::')[0])
     return randomItem(channel[0].stations)
   }
-  
+
   // Stop
-  if (query.token) {
+  if (query.stop) {
     // @ts-ignore
-    let channel = searchChannels(query.token.split('::')[0])
+    let channel = searchChannels(query.stop.split('::')[0])
     let searchStations = fuzzy(channel.stations, 'name');
+    // @ts-ignore
+    let station = searchStations(query.stop.split('::')[1])
+
+    let offset = query.offset
+    //  update station offset
+    station[0].offset = offset
+
+    // update channel with recentlyPlayed
+    channel[0].recentlyPlayed = {
+      name: station[0].name,
+      url: station[0].url,
+      offset: station[0].offset,
+    }
+
+    // update library with recentlyPlayed
+    let data = {
+      recentlyPlayed: {
+        name: station[0].name,
+        url: station[0].url,
+        offset: station[0].offset,
+        channel: channel[0].name
+      }
+    }
+
     console.log(query.stop)
-    return 
+    return
   }
-  
+
 
   // Help
 
 
   // console.log("event", event.context, body)
   // console.log("body", body)
-  
+
   return {
     channel: channel,
     station: station

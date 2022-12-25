@@ -1,10 +1,10 @@
 <template>
   <div
     v-if="isActive"
-    class="fixed inset-0 z-20 flex items-center justify-center w-screen h-screen z-80 bg-stone-900/90 "
+    class="fixed inset-0 z-20 flex items-center justify-center w-screen h-screen bg-black z-80 "
     id="modal"
   >
-    <div role="alert" class="relative flex flex-col w-full max-w-xl max-h-full py-2 mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-800 bg-clip-padding text-stone-400">
+    <div role="alert" class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-800 bg-clip-padding text-stone-400">
       <slot />
     </div>
   </div>

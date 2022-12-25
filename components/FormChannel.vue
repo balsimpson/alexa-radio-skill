@@ -1,10 +1,11 @@
 <template>
   <div
-    class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-[#EDEBD5] text-stone-400">
-    <div class="flex items-start justify-between flex-shrink-0 p-4 border-b border-[#7C3D13]/80 rounded-t-md text-[#7C3D13]">
+    class="relative flex flex-col w-full max-w-xl max-h-full mx-auto overflow-hidden text-current border-none rounded-md shadow-lg outline-none pointer-events-auto bg-stone-900/80 text-stone-400">
+    <div
+      class="flex items-start justify-between flex-shrink-0 p-4 border-b border-stone-700/80 rounded-t-md text-stone-400">
       <div class="">
         <!-- <pre>{{ item }}</pre> -->
-        <h3 class="text-2xl font-bold text-[#7C3D13]">
+        <h3 class="text-2xl font-bold text-stone-400">
           {{ item.uid ? "Edit channel" : "Add a channel" }}
         </h3>
         <p class="mt-1 text-sm ">
@@ -17,14 +18,14 @@
         <IconX />
       </button>
     </div>
-    <div class="relative flex-auto p-2 overflow-y-auto text-[#7C3D13]">
+    <div class="relative flex-auto p-2 overflow-y-auto text-stone-500">
 
       <div class="p-3">
         <label class="block mb-1 text-sm font-bold" for="name">
           What is the name of your Channel?
         </label>
         <input
-          class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-[#7C3D13] border-[#7C3D13] focus:outline-none focus:shadow-outline bg-[#ffffff]"
+          class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
           type="text" placeholder="Enter channel name" v-model="item.name" />
       </div>
 
@@ -40,7 +41,7 @@
             What is the name of the Station?
           </label>
           <input
-            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-[#7C3D13] border-[#7C3D13] focus:outline-none focus:shadow-outline bg-[#ffffff]"
+            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
             type="text" placeholder="Enter station name" v-model="stationName" />
         </div>
         <div class="mt-2">
@@ -48,23 +49,25 @@
             What is the URL of the Station?
           </label>
           <input
-            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-[#7C3D13] border-[#7C3D13] focus:outline-none focus:shadow-outline bg-[#ffffff]"
+            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
             type="url" placeholder="Enter station URL" v-model="stationURL" />
         </div>
         <button @click.prevent="addStation(stationName, stationURL)"
-          class="px-3 py-1 mt-2 text-xs font-bold border rounded-full text-[#7C3D13] border-[#7C3D13] hover:border-cyan-400 active:border-cyan-400">Add
-          Station</button>
+          class="px-3 py-1 mt-2 text-xs font-bold border rounded-full text-cyan-700 border-cyan-700 hover:border-cyan-700 active:border-cyan-700 hover:text-cyan-700"
+          :class="[(stationName && stationURL) ? 'opacity-100' : 'opacity-50 pointer-events-none']">Add Station</button>
       </div>
 
 
       <div class="p-4 mt-4 border-t border-stone-600">
-        <h3 class="text-lg font-bold text-[#7C3D13] ">
-          Stations <span v-if="addedStations?.length > 0" class="px-2 ml-2 text-white rounded bg-[#7C3D13]">{{ addedStations?.length }}</span>
+        <h3 class="text-lg font-bold text-stone-500 ">
+          Stations <span v-if="addedStations?.length > 0" class="px-2 ml-2 text-white rounded bg-cyan-800 ">{{
+              addedStations?.length
+          }}</span>
         </h3>
         <div v-if="item && addedStations?.length > 0">
           <draggable tag="ul" :list="addedStations" class="space-y-2 list-group" handle=".handle" item-key="order">
             <template #item="{ element, index }">
-              <div class="w-full p-2 rounded text-[#7C3D13] border-[#7C3D13] border-2 bg-[#EDEBD5]">
+              <div class="w-full p-2 border-2 rounded text-stone-400 border-stone-500 bg-stone-600">
                 <div class="flex justify-between h-full">
                   <div class="w-10/12 shrink-0">
                     <div class="text-xl font-semibold tracking-wide break-words">{{ element.name }}</div>
@@ -72,8 +75,8 @@
                   </div>
 
                   <div class="flex flex-col justify-between shrink-0">
-                    <IconXCircle @click.prevent="deleteStation(element.url)" />
-                    <IconMenu class="cursor-pointer handle" />
+                    <IconXCircle @click.prevent="deleteStation(element.url)" class="hover:text-red-500"/>
+                    <IconMenu class="cursor-pointer handle hover:text-cyan-600" />
                   </div>
                 </div>
               </div>
@@ -81,17 +84,25 @@
           </draggable>
 
         </div>
-        <div v-else>No Stations Added</div>
+        <div v-else>
+          <div class="flex mt-3 space-x-3">
+            <IconInfoSquare />
+            <div>No Stations Added</div>
+          </div>
+          <p class="text-sm italic">Use the form above to add a station.</p>
+        </div>
       </div>
     </div>
 
     <div
-    class="flex flex-wrap items-center justify-center flex-shrink-0 p-4 space-y-2 border-t border-stone-700 rounded-b-md">
-    <div class="flex justify-between w-full">
-      <button v-if="item.uid" @click="deleteChannel(item.uid)" class="sm:inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out">delete channel</button>
-      <ToggleSwitch @toggled="isShuffleOn=!isShuffleOn" checked="Shuffle ON" unchecked="Shuffle OFF"
+      class="flex flex-wrap items-center justify-center flex-shrink-0 p-4 space-y-2 border-t border-stone-700 rounded-b-md">
+      <div class="flex justify-between w-full">
+        <button v-if="item.uid" @click="deleteChannel(item.uid)"
+          class="sm:inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out">delete
+          channel</button>
+        <ToggleSwitch @toggled="isShuffleOn = !isShuffleOn" checked="Shuffle ON" unchecked="Shuffle OFF"
           :status="false" />
-    </div>
+      </div>
       <button @click.prevent="emit('close')" type="button"
         class="sm:inline-block px-6 py-2.5 border border-stone-600 text-stone-500 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-stone-700 hover:text-stone-400 hover:shadow-lg focus:bg-stone-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-stone-800 active:shadow-lg transition duration-150 ease-in-out w-full"
         data-bs-dismiss="modal">
@@ -113,7 +124,7 @@
 </template>
 
 <script setup>
-import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu } from "@iconify-prerendered/vue-bx";
+import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconInfoSquare } from "@iconify-prerendered/vue-bx";
 import draggable from 'vuedraggable'
 
 const props = defineProps({
