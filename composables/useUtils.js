@@ -35,6 +35,12 @@ export const randomItem = (arrayOfItems) => {
 
 };
 
+export const filterArray = (array, name) => {
+  return array.filter(element => {
+    return element.name != name;
+  });
+}
+
 export const groupByProp = (items, prop) => {
 
   const groups = {};

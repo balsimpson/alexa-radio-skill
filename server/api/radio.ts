@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
 import { getDocsFromFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
+import { getNextTrack, searchTrack, getUpdateLibrary } from "~~/composables/useRadio"
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()
@@ -21,108 +22,29 @@ export default defineEventHandler(async (event) => {
   // get library
   const channels = await getDocsFromFirestore("channels");
 
-  let allStations = []
-
-  channels.map((channel: { name: any; stations: any[]; }) => {
-    let channelName = channel.name
-    channel.stations.map(station => {
-      station.channel = channelName
-      allStations.push(station)
-    })
-  })
-
-  let searchChannels = fuzzy(channels, 'name');
-  let searchAllStations = fuzzy(allStations, 'name');
-
-  console.log("query", query)
-  // console.log(library);
-  // Launch
-  // play recently played
-  // else play random channel
-  let channel = [];
-  let station = [];
-
   // Play Intent - search
   if (query.search) {
-    channel = searchChannels(query.search)
-    station = searchAllStations(query.search)
-    // get channel
-    // if recentlyPlayed, return that
-    if (channel && channel.length > 0) {
-      if (channel[0].recentlyPlayed) {
-        return channel[0].recentlyPlayed
-      } else if (channel[0].shuffle) {
-        // else if shuffle is on, return random station
-        return randomItem(channel[0].stations)
-      } else {
-        // else return first station 
-        return channel[0].stations[0]
-      }
-    }
-    // get station
-    // if station, return station
-
-    // if no track found, return error
-
+    // @ts-ignore
+    return searchTrack(query.search, channels)
   }
 
-  // Next
-  // get channel from token
-  // if shuffle on, return random station
-  // else return next station
+  // playback Started
 
-  //  if no next station, return error
 
-  // Queue
+  // Next || Queue
   if (query.queue) {
-    console.log(query.queue)
     // @ts-ignore
-    let channel = searchChannels(query.queue.split('::')[0])
-    return randomItem(channel[0].stations)
+    // get channel from token
+    let channel = searchChannels(query.next.split('::')[0])
+    // @ts-ignore
+    let stationName = query.next.split('::')[1]
+    return getNextTrack(channel, stationName)
   }
 
   // Stop
   if (query.stop) {
-    // @ts-ignore
-    let channel = searchChannels(query.stop.split('::')[0])
-    let searchStations = fuzzy(channel.stations, 'name');
-    // @ts-ignore
-    let station = searchStations(query.stop.split('::')[1])
-
-    let offset = query.offset
-    //  update station offset
-    station[0].offset = offset
-
-    // update channel with recentlyPlayed
-    channel[0].recentlyPlayed = {
-      name: station[0].name,
-      url: station[0].url,
-      offset: station[0].offset,
-    }
-
-    // update library with recentlyPlayed
-    let data = {
-      recentlyPlayed: {
-        name: station[0].name,
-        url: station[0].url,
-        offset: station[0].offset,
-        channel: channel[0].name
-      }
-    }
-
-    console.log(query.stop)
-    return
-  }
-
-
-  // Help
-
-
-  // console.log("event", event.context, body)
-  // console.log("body", body)
-
-  return {
-    channel: channel,
-    station: station
+    let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
+    
+    console.log(updatedLibrary)
   }
 })

@@ -30,8 +30,9 @@
       </div>
 
       <div class="p-2 px-3 mt-3 border-t border-stone-600">
-        <h3 class="text-xl font-bold">
-          Add a station
+        <h3 class="flex items-center text-xl font-bold">
+          <IconAddToQueue />
+          <span class="ml-3">Add a station</span>
         </h3>
         <p class="text-sm ">
           You can add as many stations as you want to a channel.
@@ -67,14 +68,14 @@
         <div v-if="item && addedStations?.length > 0">
           <draggable tag="ul" :list="addedStations" class="space-y-2 list-group" handle=".handle" item-key="order">
             <template #item="{ element, index }">
-              <div class="w-full p-2 border-2 rounded text-stone-400 border-stone-500 bg-stone-600">
-                <div class="flex justify-between h-full">
+              <div class="w-full p-2 border-2 rounded text-stone-400 border-stone-600 bg-stone-700">
+                <div class="flex items-center justify-between h-full">
                   <div class="w-10/12 shrink-0">
                     <div class="text-xl font-semibold tracking-wide break-words">{{ element.name }}</div>
                     <div class="w-full text-sm break-words">{{ element.url }}</div>
                   </div>
 
-                  <div class="flex flex-col justify-between shrink-0">
+                  <div class="flex flex-col justify-between space-y-1 shrink-0">
                     <IconXCircle @click.prevent="deleteStation(element.url)" class="hover:text-red-500"/>
                     <IconMenu class="cursor-pointer handle hover:text-cyan-600" />
                   </div>
@@ -124,7 +125,7 @@
 </template>
 
 <script setup>
-import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconInfoSquare } from "@iconify-prerendered/vue-bx";
+import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconInfoSquare, IconAddToQueue } from "@iconify-prerendered/vue-bx";
 import draggable from 'vuedraggable'
 
 const props = defineProps({

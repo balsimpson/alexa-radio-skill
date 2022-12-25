@@ -7,13 +7,13 @@
           <img src="/favicon.png" alt="" class="w-12">
         </NuxtLink>
 
-        <div class="flex items-center space-x-6 text-cyan-600">
+        <div class="flex items-center space-x-6 text-purple-700/70">
           <NuxtLink to="/help">
-            <IconBxHelpCircle class="w-12 h-12 transition" />
+            <IconBxHelpCircle class="w-12 h-12 transition hover:text-purple-600" />
           </NuxtLink>
 
           <NuxtLink to="/settings">
-            <IconCog class="w-12 h-12 transition hover:-rotate-12" />
+            <IconCog class="w-12 h-12 transition hover:-rotate-12 hover:text-purple-600" />
           </NuxtLink>
 
         </div>

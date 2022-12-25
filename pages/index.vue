@@ -50,7 +50,7 @@
 				<!-- Stats -->
 				<!-- End Stats -->
 			</div>
-			<div class="flex justify-center p-3 py-6 mt-6 text-center border rounded-lg border-stone-800">
+			<div class="flex justify-center p-3 py-6 mt-6 text-center border-t border-b border-stone-800">
 				<div>
 					<h4 class="font-semibold text-gray-800 dark:text-gray-200">Recently Played</h4>
 					<p class="text-lg font-bold text-violet-400 sm:mt-3 sm:text-xl">Lord Of The Rings: Lord Of The Rings</p>
@@ -61,22 +61,34 @@
 		</div>
 		<!-- End Features -->
 
-		<div class="max-w-xl mx-auto text-center">
+		<div v-if="channels.length" class="max-w-xl mx-auto text-center">
 
-			<div class="flex items-center justify-between px-3 pt-12 pb-2">
+			<div class="flex items-center justify-between px-3 pt-12 pb-6">
 				<div class="text-2xl font-bold text-purple-100 font-arvo">Channels
 				</div>
 
 				<button @click.prevent="showModal({})"
 					class="flex items-center justify-center px-3 py-2 font-semibold transition-colors bg-purple-900 rounded text-stone-200 hover:bg-purple-700">
 					<IconPlus /><span class="ml-3">Add
-					Channel</span></button>
+						Channel</span>
+				</button>
 
 			</div>
-			<div v-if="channels" class="pb-12 text-left">
-				<div class="space-y-3">
+			<div class="pb-12 text-left">
+				<div class="space-y-6">
 					<ChannelCard v-for="channel in channels" :channel="channel" />
 				</div>
+			</div>
+		</div>
+
+		<div v-else class="flex items-center justify-center py-12 text-center">
+			<div>
+				<div>Your library is empty.</div>
+				<button @click.prevent="showModal({})"
+					class="flex items-center justify-center px-3 py-2 mt-12 font-semibold transition-colors bg-purple-900 rounded text-stone-200 hover:bg-purple-700">
+					<IconPlus /><span class="ml-3">Add
+						Channel</span>
+				</button>
 			</div>
 		</div>
 
