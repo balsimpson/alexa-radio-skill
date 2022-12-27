@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
-import { getDocsFromFirestore, getDocFromFirestore } from "~~/composables/useFirebase";
+import { getDocsFromFirestore, getDocFromFirestore, updateDocInFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
 import { getNextTrack, searchTrack, getUpdatedChannel, getOutputSpeech } from "~~/composables/useRadio"
 
@@ -51,6 +51,6 @@ export default defineEventHandler(async (event) => {
     // update doc in firestore
     let res = updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
 
-    console.log(res)
+    return res
   }
 })

@@ -94,24 +94,25 @@ export const getUpdatedChannel = (token, offset, channels) => {
   let channel = searchChannels(token.split('::')[0])
 
   // @ts-ignore
-  let searchStations = fuzzy(channel.stations, 'name');
+  let searchStations = fuzzy(channel[0].stations, 'name');
   // @ts-ignore
-  let station = searchStations(token.split('::')[1])
+  let stationName = searchStations(token.split('::')[1])
 
   for (let i = 0; i < channel[0].stations.length; i++) {
-    let station = channel.stations[i];
+    let station = channel[0].stations[i];
     // @ts-ignore
     if (station.name == stationName) {
       // update the offset
       station.offset = offset
     }
   }
-  // update channel with recentlyPlayed
-  channel[0].recentlyPlayed = {
-    name: station[0].name,
-    url: station[0].url,
-    offset: station[0].offset || 0,
-  }
+  console.log("station", channel)
+  // // update channel with recentlyPlayed
+  // channel[0].recentlyPlayed = {
+  //   name: station[0].name,
+  //   url: station[0].url,
+  //   offset: station[0].offset || 0,
+  // }
 
   return channel[0]
 
