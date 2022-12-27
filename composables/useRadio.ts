@@ -32,6 +32,8 @@ export const getNextTrack = (channel: { shuffle: any; stations: [] }, stationNam
 }
 
 export const searchTrack = (query: string, channels: { name: any; stations: any[]; }[]) => {
+
+  console.log("search track", query, channels)
   let searchChannels = fuzzy(channels, 'name');
   let channel = searchChannels(query.search)
   let station = getStation(query, channels)

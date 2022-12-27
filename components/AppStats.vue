@@ -41,7 +41,7 @@ const stationCount = ref(0)
 onMounted(() => {
   let allStations = []
 
-  console.log(props.items)
+  // console.log(props.items)
   props.items.map((channel) => {
     let channelName = channel.name
     channel.stations.map(station => {

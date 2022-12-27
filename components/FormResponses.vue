@@ -1,5 +1,5 @@
 <template>
-  <form class="p-4 border-2 rounded-lg border-stone-800 bg-stone-900">
+  <form class="p-4 border-2 rounded-lg border-stone-800 bg-stone-900 section" ref="el">
     <h2 class="mb-1 text-xl font-bold">{{ title }}</h2>
     <p class="mb-4 text-sm">{{ description }}</p>
     <div class="space-y-2">
@@ -27,6 +27,8 @@
 const props = defineProps(["title", "description", "placeholder", "inputs"])
 const emit = defineEmits(["update"])
 
+const el = ref()
+
 const input1 = ref("")
 const input2 = ref("")
 const input3 = ref("")
@@ -36,6 +38,8 @@ onMounted(() => {
   input1.value = props.inputs[0] || ""
   input2.value = props.inputs[1] || ""
   input3.value = props.inputs[2] || ""
+
+  observeElements([el.value]);
 })
 
 const onUpdate = () => {
@@ -43,3 +47,19 @@ const onUpdate = () => {
   // console.log("onUpdate", [input1.value, input2.value, input3.value])
 }
 </script>
+
+<style>
+.section {
+  /* Add your styles for the sections here */
+  /* Initialize the section to be hidden */
+  opacity: 0.5;
+  transform: translateY(50px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Show the section when the visibility flag is set to true */
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
