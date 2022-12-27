@@ -36,12 +36,10 @@ export default defineEventHandler(async (event) => {
 
   // Next || Queue
   if (query.queue) {
+    let track = getNextTrack(channels, query.queue)
     // @ts-ignore
-    // get channel from token
-    // let channel = searchChannels(query.next.split('::')[0])
-    // @ts-ignore
-    // let stationName = query.queue.split('::')[1]
-    return getNextTrack(channels, query.queue)
+    track.speech = getOutputSpeech(responses, "next_playing")
+    return track
   }
 
   // Stop
