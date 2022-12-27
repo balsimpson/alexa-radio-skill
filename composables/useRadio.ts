@@ -35,7 +35,7 @@ export const searchTrack = (query: string, channels: { name: any; stations: any[
 
   console.log("search track", query, channels)
   let searchChannels = fuzzy(channels, 'name');
-  let channel = searchChannels(query.search)
+  let channel = searchChannels(query)
   let station = getStation(query, channels)
   // get channel
   // If a channel matches the search term, it takes priority over station match
