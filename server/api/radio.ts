@@ -49,7 +49,9 @@ export default defineEventHandler(async (event) => {
     // let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
     let channelToUpdate = getUpdatedChannel(query.stop, query.offset, channels )
     // update doc in firestore
-    let res = updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
+    let res = await updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
+
+    console.log(res)
 
     return channelToUpdate
   }
