@@ -51,8 +51,6 @@ export default defineEventHandler(async (event) => {
     // update doc in firestore
     let res = await updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
 
-    console.log(res)
-
-    return channelToUpdate
+    return getOutputSpeech(responses, "stop_playing")
   }
 })
