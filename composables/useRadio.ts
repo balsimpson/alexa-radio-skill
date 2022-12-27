@@ -3,11 +3,13 @@ import { fuzzy, randomItem, filterArray } from "~~/composables/useUtils"
 export const getNextTrack = (channels, token: any) => {
   if (!channels || !token) return
 
+  console.log(channels, token)
+
   let stationName = token.split('::')[1]
 
   let searchChannels = fuzzy(channels, 'name');
   let channel = searchChannels(token.split('::')[0])
-
+  channel = channel[0]
 
   let nextTrack = {};
 
@@ -20,6 +22,7 @@ export const getNextTrack = (channels, token: any) => {
     }
   } else {
     // find index of station, check if index+1, then return
+    // console.log(channel)
     for (let i = 0; i < channel.stations.length; i++) {
       const station = channel.stations[i];
       // @ts-ignore
