@@ -1,7 +1,13 @@
 import { fuzzy, randomItem, filterArray } from "~~/composables/useUtils"
 
-export const getNextTrack = (channel: { shuffle: any; stations: [] }, stationName: any) => {
-  if (!channel || !stationName) return
+export const getNextTrack = (channels, token: any) => {
+  if (!channels || !token) return
+
+  let stationName = token.split('::')[1]
+
+  let searchChannels = fuzzy(channels, 'name');
+  let channel = searchChannels(token.split('::')[0])
+
 
   let nextTrack = {};
 

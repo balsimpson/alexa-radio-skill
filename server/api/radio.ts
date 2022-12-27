@@ -35,10 +35,10 @@ export default defineEventHandler(async (event) => {
   if (query.queue) {
     // @ts-ignore
     // get channel from token
-    let channel = searchChannels(query.next.split('::')[0])
+    // let channel = searchChannels(query.next.split('::')[0])
     // @ts-ignore
     let stationName = query.next.split('::')[1]
-    return getNextTrack(channel, stationName)
+    return getNextTrack(channels, stationName)
   }
 
   // Stop
