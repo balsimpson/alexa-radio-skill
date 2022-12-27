@@ -22,7 +22,7 @@ export const getNextTrack = (channels, token: any) => {
     }
   } else {
     // find index of station, check if index+1, then return
-    // console.log(channel)
+    console.log(channel)
     for (let i = 0; i < channel.stations.length; i++) {
       const station = channel.stations[i];
       // @ts-ignore
@@ -37,6 +37,7 @@ export const getNextTrack = (channels, token: any) => {
     }
   }
 
+  nextTrack["channel"] = channel.name
   return nextTrack
 }
 
