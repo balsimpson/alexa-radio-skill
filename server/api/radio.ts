@@ -51,6 +51,6 @@ export default defineEventHandler(async (event) => {
     // update doc in firestore
     let res = updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
 
-    return res
+    return channelToUpdate
   }
 })
