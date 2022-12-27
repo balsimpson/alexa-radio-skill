@@ -22,30 +22,5 @@ export default defineEventHandler(async (event) => {
   // get library
   const channels = await getDocsFromFirestore("channels");
 
-  // Play Intent - search
-  if (query.search) {
-    // @ts-ignore
-    let track = searchTrack(query.search, channels)
-    return track
-  }
-
-  // playback Started
-
-
-  // Next || Queue
-  if (query.queue) {
-    // @ts-ignore
-    // get channel from token
-    // let channel = searchChannels(query.next.split('::')[0])
-    // @ts-ignore
-    let stationName = query.next.split('::')[1]
-    return getNextTrack(channels, stationName)
-  }
-
-  // Stop
-  if (query.stop) {
-    let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
-    
-    console.log(updatedLibrary)
-  }
+  return channels
 })

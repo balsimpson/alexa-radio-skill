@@ -1,33 +1,7 @@
 <template>
 	<div>
-		<!-- <div class="bg-[#EE9A8F] w-full flex items-center justify-center py-12 flex-col sm:flex-row">
 
-			<div class="relative w-1/3 shrink-0">
-				<img src="/hero_jukebox.png" alt="">
-				<IconMusicNote class="absolute w-12 h-12 delay-300 -top-6 right-4 rotate-6 animate-pulse" />
-				<IconMusicNote class="absolute w-12 h-12 delay-150 top-6 left-8 animate-pulse -rotate-12" />
-				<IconMusic class="absolute w-12 h-12 -top-4 left-4 -rotate-6 animate-pulse" />
-			</div>
-			<div class="max-w-sm px-3 text-center sm:text-left">
-				<div class="text-5xl font-bold font-arvo text-[#7C3D13]"> <span
-						class="mt-8 text-5xl font-semibold tracking-wide text-center text-transparent text-clip bg-gradient-to-br from-[#57B8A3] to-[#094d3e] bg-clip-text">
-						Upgrade
-					</span> your music game
-				</div>
-				<p class="text-[#7C3D13] mt-2 font-medium">Easily deploy your own Alexa skill and customize it with your
-					favorite streaming
-					radio stations.</p>
-				<div class="flex items-center justify-center mt-3 space-x-3 sm:justify-start">
-					<button @click.prevent="showModal({})"
-						class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-stone-200 bg-[#7C3D13]">Add
-						Channel</button>
-					<button class="px-3 py-1 font-semibold border-2 rounded border-[#7C3D13] text-[#7C3D13]">Get Started</button>
-				</div>
-			</div>
-
-		</div> -->
-
-		<AppStats v-if="channels && channels.length" :items="channels"/>
+		<AppStats v-if="channels && channels.length && !pending" :items="channels"/>
 
 		<div v-if="channels && channels.length" class="max-w-xl mx-auto text-center">
 
@@ -76,12 +50,18 @@ import draggable from 'vuedraggable'
 // import useToast from "vue-toastification";
 // const toast = useToast();
 
-const channels = ref([])
+// const channels = ref([])
 const isModalActive = ref(false)
 const channelToEdit = ref({})
 
 const channelCount = ref(0)
 const stationCount = ref(0)
+
+
+const { data: channels, pending, error, refresh } = await useAsyncData(
+  'items',
+  () => $fetch('/api/library')
+)
 
 const addChannel = async (data) => {
 
@@ -114,36 +94,36 @@ const showToast = () => {
 
 onMounted(async () => {
 	// channels.value = await watchDb("channels")
-	const db = getFirestore();
-	const q = query(collection(db, "channels"));
-	const subscribe = onSnapshot(q, (querySnapshot) => {
+	// const db = getFirestore();
+	// const q = query(collection(db, "channels"));
+	// const subscribe = onSnapshot(q, (querySnapshot) => {
 
-		const items = []
+	// 	const items = []
 
-		querySnapshot.forEach((doc) => {
-			let data = doc.data();
-			// @ts-ignore
-			// console.log("data", data)
-			data.uid = doc.id;
-			items.push(data);
-		});
+	// 	querySnapshot.forEach((doc) => {
+	// 		let data = doc.data();
+	// 		// @ts-ignore
+	// 		// console.log("data", data)
+	// 		data.uid = doc.id;
+	// 		items.push(data);
+	// 	});
 
-		// return items
-		channels.value = items;
+	// 	// return items
+	// 	channels.value = items;
 
-		let allStations = []
+	// 	let allStations = []
 
-		channels.value.map((channel) => {
-			let channelName = channel.name
-			channel.stations.map(station => {
-				station.channel = channelName
-				allStations.push(station)
-			})
-		})
+	// 	channels.value.map((channel) => {
+	// 		let channelName = channel.name
+	// 		channel.stations.map(station => {
+	// 			station.channel = channelName
+	// 			allStations.push(station)
+	// 		})
+	// 	})
 
-		channelCount.value = items.length
-		stationCount.value = allStations.length
-	});
+	// 	channelCount.value = items.length
+	// 	stationCount.value = allStations.length
+	// });
 	// channels.value = await getDocsFromFirestore("channels")
 })
 </script>
