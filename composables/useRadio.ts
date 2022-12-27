@@ -3,7 +3,7 @@ import { fuzzy, randomItem, filterArray } from "~~/composables/useUtils"
 export const getNextTrack = (channels, token: any) => {
   if (!channels || !token) return
 
-  console.log(channels, token)
+  // console.log(channels, token)
 
   let stationName = token.split('::')[1]
 
@@ -22,7 +22,7 @@ export const getNextTrack = (channels, token: any) => {
     }
   } else {
     // find index of station, check if index+1, then return
-    console.log(channel)
+    // console.log(channel)
     for (let i = 0; i < channel.stations.length; i++) {
       const station = channel.stations[i];
       // @ts-ignore
@@ -43,7 +43,7 @@ export const getNextTrack = (channels, token: any) => {
 
 export const searchTrack = (query: string, channels: { name: any; stations: any[]; }[]) => {
 
-  console.log("search track", query, channels)
+  // console.log("search track", query, channels)
   let searchChannels = fuzzy(channels, 'name');
   let channel = searchChannels(query)
   let station = getStation(query, channels)
@@ -88,7 +88,7 @@ export const getStation = (stationName: any, channels: { name: any; stations: an
 
 }
 
-export const getUpdateLibrary = (token, offset, channels) => {
+export const getUpdatedChannel = (token, offset, channels) => {
 
   let searchChannels = fuzzy(channels, 'name');
   let channel = searchChannels(token.split('::')[0])
@@ -98,15 +98,22 @@ export const getUpdateLibrary = (token, offset, channels) => {
   // @ts-ignore
   let station = searchStations(token.split('::')[1])
 
-  //  update station offset
-  station[0].offset = offset
-
+  for (let i = 0; i < channel[0].stations.length; i++) {
+    let station = channel.stations[i];
+    // @ts-ignore
+    if (station.name == stationName) {
+      // update the offset
+      station.offset = offset
+    }
+  }
   // update channel with recentlyPlayed
   channel[0].recentlyPlayed = {
     name: station[0].name,
     url: station[0].url,
-    offset: station[0].offset,
+    offset: station[0].offset || 0,
   }
+
+  return channel[0]
 
   // update library with recentlyPlayed
   // let data = {
@@ -116,7 +123,9 @@ export const getUpdateLibrary = (token, offset, channels) => {
   //     offset: station[0].offset,
   //     channel: channel[0].name
   //   }
-  // }
+  // }dsdsdsdsdsdsdsadsaaaadsdsdsdsdsdsewfg`§tyf§§§§§§§§§§§§dsdsdsdsdsds
+}
 
-  return channels
+export const getOutputSpeech = (responses, type) => {
+  return randomItem(responses[type])
 }

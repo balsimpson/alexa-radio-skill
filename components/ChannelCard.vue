@@ -42,7 +42,7 @@ onMounted(async () => {
 .section {
   /* Add your styles for the sections here */
   /* Initialize the section to be hidden */
-  opacity: 0.5;
+  opacity: 0;
   transform: translateY(50px);
   transition: opacity 0.5s, transform 0.5s;
 }

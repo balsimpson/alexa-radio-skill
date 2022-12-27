@@ -1,9 +1,9 @@
 <template>
 	<div>
 
-		<AppStats v-if="channels && channels.length && !pending" :items="channels"/>
+		<AppStats v-if="library && library.channels && library.channels.length && !pending" :items="library.channels"/>
 
-		<div v-if="channels && channels.length" class="max-w-xl mx-auto text-center">
+		<div v-if="library && library.channels && library.channels.length" class="max-w-xl mx-auto text-center">
 
 			<div class="flex items-center justify-between px-3 pt-12 pb-6">
 				<div class="text-2xl font-bold text-purple-100 font-arvo">Channels
@@ -18,7 +18,7 @@
 			</div>
 			<div class="pb-12 text-left">
 				<div class="space-y-6">
-					<ChannelCard @edit="showModal($event)" v-for="channel in channels" :channel="channel" />
+					<ChannelCard @edit="showModal($event)" v-for="channel in library.channels" :channel="channel" />
 				</div>
 			</div>
 		</div>
@@ -37,7 +37,6 @@
 		<AppModalTest :is-active="isModalActive">
 			<FormChannel @close="isModalActive = !isModalActive" @delete="deleteChannel" @add="addChannel($event)"
 				@update="updateChannel($event)" :item="channelToEdit" />
-
 		</AppModalTest>
 	</div>
 </template>
@@ -58,8 +57,8 @@ const channelCount = ref(0)
 const stationCount = ref(0)
 
 
-const { data: channels, pending, error, refresh } = await useAsyncData(
-  'items',
+const { data: library, pending, error, refresh } = await useAsyncData(
+  'library',
   () => $fetch('/api/library')
 )
 
@@ -91,41 +90,6 @@ const showToast = () => {
 		timeout: 5000
 	});
 }
-
-onMounted(async () => {
-	// channels.value = await watchDb("channels")
-	// const db = getFirestore();
-	// const q = query(collection(db, "channels"));
-	// const subscribe = onSnapshot(q, (querySnapshot) => {
-
-	// 	const items = []
-
-	// 	querySnapshot.forEach((doc) => {
-	// 		let data = doc.data();
-	// 		// @ts-ignore
-	// 		// console.log("data", data)
-	// 		data.uid = doc.id;
-	// 		items.push(data);
-	// 	});
-
-	// 	// return items
-	// 	channels.value = items;
-
-	// 	let allStations = []
-
-	// 	channels.value.map((channel) => {
-	// 		let channelName = channel.name
-	// 		channel.stations.map(station => {
-	// 			station.channel = channelName
-	// 			allStations.push(station)
-	// 		})
-	// 	})
-
-	// 	channelCount.value = items.length
-	// 	stationCount.value = allStations.length
-	// });
-	// channels.value = await getDocsFromFirestore("channels")
-})
 </script>
 
 

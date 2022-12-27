@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
-import { getDocsFromFirestore } from "~~/composables/useFirebase";
+import { getDocsFromFirestore, getDocFromFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
 import { getNextTrack, searchTrack, getUpdateLibrary } from "~~/composables/useRadio"
 
@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
 
   // get library
   const channels = await getDocsFromFirestore("channels");
+  const recentlyPlayed = await getDocFromFirestore("alexa", "recentlyPlayed")
 
-  return channels
+  return { channels, recentlyPlayed }
 })

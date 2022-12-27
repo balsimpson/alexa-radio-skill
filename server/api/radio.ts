@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
-import { getDocsFromFirestore } from "~~/composables/useFirebase";
+import { getDocsFromFirestore, getDocFromFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
-import { getNextTrack, searchTrack, getUpdateLibrary } from "~~/composables/useRadio"
+import { getNextTrack, searchTrack, getUpdatedChannel, getOutputSpeech } from "~~/composables/useRadio"
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()
@@ -21,11 +21,13 @@ export default defineEventHandler(async (event) => {
 
   // get library
   const channels = await getDocsFromFirestore("channels");
+  const responses = await getDocFromFirestore("alexa", "responses")
 
   // Play Intent - search
   if (query.search) {
     // @ts-ignore
     let track = searchTrack(query.search, channels)
+    track.speech = getOutputSpeech(responses, "now_playing")
     return track
   }
 
@@ -44,8 +46,11 @@ export default defineEventHandler(async (event) => {
 
   // Stop
   if (query.stop) {
-    let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
-    
-    console.log(updatedLibrary)
+    // let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
+    let channelToUpdate = getUpdatedChannel(query.stop, query.offset, channels )
+    // update doc in firestore
+    let res = updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
+
+    console.log(res)
   }
 })
