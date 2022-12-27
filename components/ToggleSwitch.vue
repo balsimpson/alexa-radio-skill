@@ -42,11 +42,11 @@ function onChange(e) {
     displayText.value = props.unchecked;
   }
 
-  emit("toggled", inputState.value ? "published": "draft");
+  emit("toggled", inputState.value ? true: false);
 }
 
 onMounted(() => {
-  if (props.status == "published") {
+  if (props.status) {
     inputState.value = true;
     displayText.value = props.checked;
   } else {

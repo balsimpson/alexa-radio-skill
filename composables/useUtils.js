@@ -145,3 +145,25 @@ export const convertDate = (d) => {
 
   return day + " " + months[m] + " " + y + " " + h + ":" + min;
 };
+
+export const observeElements = (elements) => {
+  // Set up an intersection observer to detect when the elements are scrolled into view
+  const options = {
+    root: document.querySelector("#scrollArea"),
+    rootMargin: "0px",
+    threshold: 1.0
+  };
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      // Check if the element is within the window viewport
+      if (entry.isIntersecting) {
+        // Element is in view, do something with it here
+        // console.log(entry)
+        entry.target.classList.add("visible")
+      }
+    });
+  });
+
+  // Start observing the elements
+  elements.forEach(element => observer.observe(element));
+}

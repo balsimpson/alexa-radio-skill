@@ -1,3 +1,4 @@
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -5,7 +6,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { addDoc, collection, getFirestore, getDocs, getDoc, doc, query, onSnapshot, writeBatch, deleteDoc, updateDoc, orderBy, where, limit, DocumentData, Query, increment } from "firebase/firestore"
+import { addDoc, collection, getFirestore, getDocs, getDoc, setDoc, doc, query, onSnapshot, writeBatch, deleteDoc, updateDoc, orderBy, where, limit, DocumentData, Query, increment } from "firebase/firestore"
 
 export const createUser = async (email: string, password: string) => {
   const auth = getAuth();
@@ -90,6 +91,35 @@ export const initUser = async () => {
   // listen to posts
 
 };
+
+export const watchDb = async (collectionName) => {
+  const config = useRuntimeConfig();
+
+  const firebaseConfig = {
+    apiKey: config.FIREBASE_API_KEY,
+    projectId: config.FIREBASE_PROJECT_ID,
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore();
+  const q = query(collection(db, collectionName));
+  const subscribe = onSnapshot(q, (querySnapshot) => {
+
+    const items = []
+    
+    querySnapshot.forEach((doc) => {
+      let data = doc.data();
+      // @ts-ignore
+      data.uid = doc.uid;
+      items.push(data);
+    });
+
+    console.log("items", items)
+    return items
+  });
+}
 
 export const signOutUser = async () => {
   const auth = getAuth();
@@ -183,7 +213,7 @@ export const getOrderedDocsFromFirestore = async (collectionName: string, order:
 * @returns {Array} array of items
 * @example getDocsWithStatus('posts', 'published', 3, 'published_at')
 */
-export const getDocsWithStatus = async (collectionName: string, status: string, count: number, order: string = "published_at" ) => {
+export const getDocsWithStatus = async (collectionName: string, status: string, count: number, order: string = "published_at") => {
   try {
     const db = getFirestore();
     let items = [];
@@ -311,6 +341,24 @@ export const deleteDocFromFirestore = async (collectionName: string, docId: stri
     return res;
   } catch (error) {
     console.log('firebase-error', error);
+    return error;
+  }
+}
+
+/**
+ * Set a document in a collection
+ * @param {string} collectionName - the collection name
+ * @param {string} uid - the document id
+ * @param {object} data - the data to update
+ * @example setDocInFirestore('products', '123', { title: "test", body: "test" })
+ */
+export const setDocInFirestore = async (collectionName: string, uid: string, data: any) => {
+  try {
+    const db = getFirestore();
+    let res = await setDoc(doc(db, collectionName, uid), data);
+    return res;
+  } catch (error) {
+    console.log('setDoc-error', error);
     return error;
   }
 }

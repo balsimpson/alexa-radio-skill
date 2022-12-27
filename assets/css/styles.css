@@ -3,3 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-input {
+  @apply w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none bg-stone-700 placeholder-stone-500 focus:ring-purple-500/30 focus:ring
+}

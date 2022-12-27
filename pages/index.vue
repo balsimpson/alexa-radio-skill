@@ -27,41 +27,9 @@
 
 		</div> -->
 
-		<!-- Features -->
-		<div class="max-w-xl px-3 py-10 mx-auto ">
-			<!-- Grid -->
-			<div class="flex flex-wrap items-end justify-center gap-6 sm:gap-12 lg:gap-8">
-				<!-- Stats -->
-				<div class="text-center">
-					<p class="mt-2 text-4xl font-bold text-violet-400 sm:mt-3 sm:text-6xl">4</p>
-					<h4 class="text-lg font-semibold text-gray-800 sm:text-xl dark:text-gray-200">Channels</h4>
-					<!-- <p class="mt-1 text-gray-500">in fulfilling orders</p> -->
-				</div>
-				<!-- End Stats -->
+		<AppStats v-if="channels && channels.length" :items="channels"/>
 
-				<!-- Stats -->
-				<div class="text-center">
-					<p class="mt-2 text-4xl font-bold text-violet-400 sm:mt-3 sm:text-6xl">16</p>
-					<h4 class="text-lg font-semibold text-gray-800 sm:text-xl dark:text-gray-200">Stations</h4>
-					<!-- <p class="mt-1 text-gray-500">partner with Preline</p> -->
-				</div>
-				<!-- End Stats -->
-
-				<!-- Stats -->
-				<!-- End Stats -->
-			</div>
-			<div class="flex justify-center p-3 py-6 mt-6 text-center border-t border-b border-stone-800">
-				<div>
-					<h4 class="font-semibold text-gray-800 dark:text-gray-200">Recently Played</h4>
-					<p class="text-lg font-bold text-violet-400 sm:mt-3 sm:text-xl">Lord Of The Rings: Lord Of The Rings</p>
-					<p class="text-gray-500 ">A Long Party</p>
-				</div>
-			</div>
-			<!-- End Grid -->
-		</div>
-		<!-- End Features -->
-
-		<div v-if="channels.length" class="max-w-xl mx-auto text-center">
+		<div v-if="channels && channels.length" class="max-w-xl mx-auto text-center">
 
 			<div class="flex items-center justify-between px-3 pt-12 pb-6">
 				<div class="text-2xl font-bold text-purple-100 font-arvo">Channels
@@ -69,14 +37,14 @@
 
 				<button @click.prevent="showModal({})"
 					class="flex items-center justify-center px-3 py-2 font-semibold transition-colors bg-purple-900 rounded text-stone-200 hover:bg-purple-700">
-					<IconPlus /><span class="ml-3">Add
+					<IconPlusBoxMultiple /><span class="ml-3">Add
 						Channel</span>
 				</button>
 
 			</div>
 			<div class="pb-12 text-left">
 				<div class="space-y-6">
-					<ChannelCard v-for="channel in channels" :channel="channel" />
+					<ChannelCard @edit="showModal($event)" v-for="channel in channels" :channel="channel" />
 				</div>
 			</div>
 		</div>
@@ -101,8 +69,9 @@
 </template>
 
 <script setup>
+import { collection, getFirestore, doc, query, onSnapshot, orderBy } from "firebase/firestore"
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconPlus } from "@iconify-prerendered/vue-bx";
-import { IconMusicBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
+import { IconMusicBoxMultiple, IconPlusBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
 import draggable from 'vuedraggable'
 // import useToast from "vue-toastification";
 // const toast = useToast();
@@ -111,14 +80,18 @@ const channels = ref([])
 const isModalActive = ref(false)
 const channelToEdit = ref({})
 
+const channelCount = ref(0)
+const stationCount = ref(0)
+
 const addChannel = async (data) => {
+
 	let res = await addDocToFirestore("channels", data);
 	isModalActive.value = !isModalActive.value;
 	console.log(data, res);
 }
 
 const showModal = (val) => {
-	console.log(val)
+	// console.log(val)
 	channelToEdit.value = val;
 	isModalActive.value = !isModalActive.value;
 }
@@ -140,10 +113,39 @@ const showToast = () => {
 }
 
 onMounted(async () => {
-	channels.value = await getDocsFromFirestore("channels")
+	// channels.value = await watchDb("channels")
+	const db = getFirestore();
+	const q = query(collection(db, "channels"));
+	const subscribe = onSnapshot(q, (querySnapshot) => {
 
-	// let res = await getDocsFromFirestore("library")
-	// console.log(res);
+		const items = []
+
+		querySnapshot.forEach((doc) => {
+			let data = doc.data();
+			// @ts-ignore
+			// console.log("data", data)
+			data.uid = doc.id;
+			items.push(data);
+		});
+
+		// return items
+		channels.value = items;
+
+		let allStations = []
+
+		channels.value.map((channel) => {
+			let channelName = channel.name
+			channel.stations.map(station => {
+				station.channel = channelName
+				allStations.push(station)
+			})
+		})
+
+		channelCount.value = items.length
+		stationCount.value = allStations.length
+	});
+	// channels.value = await getDocsFromFirestore("channels")
 })
 </script>
+
 

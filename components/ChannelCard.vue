@@ -1,12 +1,12 @@
 <template>
-  <div class="p-3 border rounded bg-stone-900 border-stone-800/70">
+  <div class="p-3 border rounded bg-stone-900 border-stone-800/70 section" ref="el">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
-        <IconMusicBoxMultiple class="w-6 h-6 text-purple-300 opacity-30" />
-        <div class="ml-2 text-2xl font-bold text-gray-400">{{ channel.name }}</div>
+        <div class="mr-2 text-2xl font-bold text-gray-400">{{ channel.name }}</div>
+        <IconShuffleVariant v-if="channel.shuffle" class="w-6 h-6 text-purple-300 opacity-30" />
       </div>
 
-      <button @click.prevent="showModal(channel)" class="opacity-40 hover:opacity-100">
+      <button @click.prevent="emit('edit', channel)" class="opacity-40 hover:opacity-100">
         <!-- <svg class="w-4 h-4 text-purple-400 transition-colors fill-current" viewBox="0 0 24 24">
           <path
             d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
@@ -24,6 +24,32 @@
 </template>
 
 <script setup>
-import { IconMusicBoxMultiple, IconEditBoxOutline } from "@iconify-prerendered/vue-mdi";
-  const props = defineProps(["channel"])
+import { IconMusicBoxMultiple, IconEditBoxOutline, IconShuffle, IconShuffleVariant } from "@iconify-prerendered/vue-mdi";
+const props = defineProps(["channel"])
+const emit = defineEmits(["edit"])
+
+const el = ref()
+
+onMounted(async () => {
+  observeElements([el.value]);
+  // let res = await getDocsFromFirestore("library")
+  // console.log(res);
+})
 </script>
+
+
+<style>
+.section {
+  /* Add your styles for the sections here */
+  /* Initialize the section to be hidden */
+  opacity: 0.5;
+  transform: translateY(50px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Show the section when the visibility flag is set to true */
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>

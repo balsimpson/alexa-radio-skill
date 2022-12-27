@@ -18,14 +18,14 @@
         <IconX />
       </button>
     </div>
-    <div class="relative flex-auto p-2 overflow-y-auto text-stone-500">
+    <div class="relative flex-auto p-2 overflow-y-auto text-gray-400">
 
       <div class="p-3">
         <label class="block mb-1 text-sm font-bold" for="name">
           What is the name of your Channel?
         </label>
         <input
-          class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
+          class="w-full px-3 py-2 leading-tight text-gray-400 border rounded shadow appearance-none border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
           type="text" placeholder="Enter channel name" v-model="item.name" />
       </div>
 
@@ -60,7 +60,7 @@
 
 
       <div class="p-4 mt-4 border-t border-stone-600">
-        <h3 class="text-lg font-bold text-stone-500 ">
+        <h3 class="text-lg font-bold text-gray-500 ">
           Stations <span v-if="addedStations?.length > 0" class="px-2 ml-2 text-white rounded bg-cyan-800 ">{{
               addedStations?.length
           }}</span>
@@ -68,7 +68,7 @@
         <div v-if="item && addedStations?.length > 0">
           <draggable tag="ul" :list="addedStations" class="space-y-2 list-group" handle=".handle" item-key="order">
             <template #item="{ element, index }">
-              <div class="w-full p-2 border-2 rounded text-stone-400 border-stone-600 bg-stone-700">
+              <div class="w-full p-2 text-gray-400 border rounded border-stone-700/40 bg-stone-800/80">
                 <div class="flex items-center justify-between h-full">
                   <div class="w-10/12 shrink-0">
                     <div class="text-xl font-semibold tracking-wide break-words">{{ element.name }}</div>
@@ -102,7 +102,7 @@
           class="sm:inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out">delete
           channel</button>
         <ToggleSwitch @toggled="isShuffleOn = !isShuffleOn" checked="Shuffle ON" unchecked="Shuffle OFF"
-          :status="false" />
+          :status="isShuffleOn" />
       </div>
       <button @click.prevent="emit('close')" type="button"
         class="sm:inline-block px-6 py-2.5 border border-stone-600 text-stone-500 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-stone-700 hover:text-stone-400 hover:shadow-lg focus:bg-stone-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-stone-800 active:shadow-lg transition duration-150 ease-in-out w-full"
@@ -149,7 +149,7 @@ const emit = defineEmits([
 const stationName = ref("")
 const stationURL = ref("")
 const addedStations = ref(props.item.stations || [])
-const isShuffleOn = ref(false)
+const isShuffleOn = ref(props.item.shuffle || false)
 
 const addChannel = (channel) => {
   const data = {
@@ -170,7 +170,7 @@ const updateChannel = (channel) => {
   }
 
   emit("update", data)
-  // console.log('data', data)
+  console.log('data', data)
 }
 
 const deleteChannel = (uid) => {
