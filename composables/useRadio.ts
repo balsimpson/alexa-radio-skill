@@ -100,15 +100,15 @@ export const getUpdatedChannel = (token, offset, channels) => {
 
   for (let i = 0; i < channel[0].stations.length; i++) {
     let station = channel[0].stations[i];
-    console.log("station", station.name, stationName)
+    // console.log("station", station.name, stationName)
     // @ts-ignore
     if (station.name == stationName) {
       // update the offset
       station.offset = offset
-      console.log("offset", stationName)
+      // console.log("offset", stationName)
     }
   }
-  console.log("channel", JSON.stringify(channel, null, 2))
+  // console.log("channel", JSON.stringify(channel, null, 2))
   // // update channel with recentlyPlayed
   // channel[0].recentlyPlayed = {
   //   name: station[0].name,
