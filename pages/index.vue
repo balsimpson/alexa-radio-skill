@@ -45,9 +45,9 @@
 import { collection, getFirestore, doc, query, onSnapshot, orderBy } from "firebase/firestore"
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconPlus } from "@iconify-prerendered/vue-bx";
 import { IconMusicBoxMultiple, IconPlusBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
-import draggable from 'vuedraggable'
-// import useToast from "vue-toastification";
-// const toast = useToast();
+// import draggable from 'vuedraggable'
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 // const channels = ref([])
 const isModalActive = ref(false)
@@ -78,15 +78,19 @@ const showModal = (val) => {
 const deleteChannel = async (id) => {
 	let res = await deleteDocFromFirestore("channels", id);
 	console.log(res)
+	isModalActive.value = !isModalActive.value;
 }
 
 const updateChannel = async (channel) => {
 	let res = await updateDocInFirestore("channels", channel.uid, channel)
 	console.log(res)
+	isModalActive.value = !isModalActive.value;
+	refresh()
+	showToast("channel updated!")
 }
 
-const showToast = () => {
-	toast.error(`Deleted channel`, {
+const showToast = (msg) => {
+	toast.error(msg, {
 		timeout: 5000
 	});
 }

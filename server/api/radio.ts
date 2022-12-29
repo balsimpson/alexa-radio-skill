@@ -34,9 +34,8 @@ export default defineEventHandler(async (event) => {
   // playback Started
 
 
-  // Next || Queue
   if (query.queue) {
-    let track = getNextTrack(channels, query.queue)
+    let track = getNextTrack(channels, query.queue) || { speech: "There are no tracks in the queue." }
     // @ts-ignore
     track.speech = getOutputSpeech(responses, "next_playing")
     return track
@@ -45,10 +44,10 @@ export default defineEventHandler(async (event) => {
   // Stop
   if (query.stop) {
     // let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
-    let channelToUpdate = getUpdatedChannel(query.stop, query.offset, channels )
+    let channelToUpdate = getUpdatedChannel(query.stop, query.offset, channels)
     // update doc in firestore
     let res = await updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
     let speech = getOutputSpeech(responses, "stop_playing")
-    return {speech} 
+    return { speech }
   }
 })

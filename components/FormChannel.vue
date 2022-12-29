@@ -170,7 +170,7 @@ const updateChannel = (channel) => {
   }
 
   emit("update", data)
-  console.log('data', data)
+  // console.log('data', data)
 }
 
 const deleteChannel = (uid) => {
