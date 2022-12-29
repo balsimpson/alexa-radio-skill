@@ -46,8 +46,11 @@ import { collection, getFirestore, doc, query, onSnapshot, orderBy } from "fireb
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconPlus } from "@iconify-prerendered/vue-bx";
 import { IconMusicBoxMultiple, IconPlusBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
 // import draggable from 'vuedraggable'
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
+
+import { useToast } from 'vue-toastification/dist/index.mjs'
 const toast = useToast();
+// console.log(useToast)
 
 // const channels = ref([])
 const isModalActive = ref(false)
