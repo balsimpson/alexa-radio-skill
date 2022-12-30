@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg px-4 py-12 mx-auto text-stone-400">
     <div>
-      <div class="sticky p-6 mb-12 border rounded-lg top-24 bg-stone-900 border-stone-800">
+      <div class="sticky z-20 p-6 mb-12 border rounded-lg top-24 bg-stone-900 border-stone-800">
         <div class="flex flex-col items-center justify-between pb-3 space-y-5 text-center sm:space-y-0 sm:flex-row sm:text-left">
           <div>
             <div class="text-3xl font-bold">Settings</div>

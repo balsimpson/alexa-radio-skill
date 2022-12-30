@@ -25,6 +25,7 @@
           What is the name of your Channel?
         </label>
         <input
+          @keypress.enter="addStation(stationName, stationURL)"
           class="w-full px-3 py-2 leading-tight text-gray-400 border rounded shadow appearance-none border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
           type="text" placeholder="Enter channel name" v-model="item.name" />
       </div>
@@ -42,6 +43,7 @@
             What is the name of the Station?
           </label>
           <input
+            @keypress.enter="addStation(stationName, stationURL)"
             class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
             type="text" placeholder="Enter station name" v-model="stationName" />
         </div>
@@ -50,6 +52,7 @@
             What is the URL of the Station?
           </label>
           <input
+          @keypress.enter="addStation(stationName, stationURL)"
             class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
             type="url" placeholder="Enter station URL" v-model="stationURL" />
         </div>
@@ -178,6 +181,7 @@ const deleteChannel = (uid) => {
 }
 
 const addStation = (name, url) => {
+  if (!name || !url) return
   stationName.value = ""
   stationURL.value = ""
   addedStations.value.push({ name, url })

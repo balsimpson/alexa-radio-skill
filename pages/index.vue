@@ -34,6 +34,7 @@
 			</div>
 		</div>
 
+		
 		<AppModalTest :is-active="isModalActive">
 			<FormChannel @close="isModalActive = !isModalActive" @delete="deleteChannel" @add="addChannel($event)"
 				@update="updateChannel($event)" :item="channelToEdit" />
@@ -89,14 +90,21 @@ const updateChannel = async (channel) => {
 	console.log(res)
 	isModalActive.value = !isModalActive.value;
 	refresh()
-	showToast("channel updated!")
+	showToast(`${channel.name} upated`)
 }
 
 const showToast = (msg) => {
-	toast.error(msg, {
-		timeout: 5000
+	toast(msg, {
+		timeout: 50000,
+		toastClassName: "bg-purple-600",
+		bodyClassName: ["font-bold"]
 	});
 }
 </script>
 
-
+<style>
+.Vue-Toastification__toast--default {
+    background-color: #582287;
+    color: #fff;
+}
+</style>
