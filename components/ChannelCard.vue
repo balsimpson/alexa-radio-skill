@@ -2,7 +2,9 @@
   <div class="p-3 border rounded bg-stone-900 border-stone-800/70 section" ref="el">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
-        <div class="mr-2 text-2xl font-bold text-gray-400">{{ channel.name }}</div>
+        <div class="mr-2 text-2xl font-bold text-gray-400">{{ channel.name }}
+          
+        </div>
         <IconShuffleVariant v-if="channel.shuffle" class="w-6 h-6 text-purple-300 opacity-30" />
       </div>
 
@@ -16,15 +18,21 @@
     </div>
     <div class="mt-2 space-y-2">
       <div v-for="station in channel.stations" class="w-full p-3 rounded bg-stone-800/80 ">
-        <div class="text-xl font-semibold tracking-wide text-gray-400 break-words">{{ station.name }}</div>
-        <div class="text-sm text-gray-500 break-words">{{ station.url }}</div>
+        <div class="flex flex-col items-start w-full sm:flex-row">
+          <div class="flex items-center text-xl font-semibold tracking-wide text-gray-400 break-words">{{ station.name }}
+          </div>
+          <div v-if="station.offset && station.offset > 0" class="inline-flex items-center justify-center px-3 py-1 text-xs text-indigo-500 border border-indigo-500 rounded-full sm:ml-3"><IconHeadphones class="text-white/40"/><span class="ml-1">{{convertOffsetToDuration(station.offset)}}</span></div>
+
+          
+        </div>
+        <div class="text-sm text-gray-600 break-words">{{ station.url }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { IconMusicBoxMultiple, IconEditBoxOutline, IconShuffle, IconShuffleVariant } from "@iconify-prerendered/vue-mdi";
+import { IconMusicBoxMultiple, IconEditBoxOutline, IconShuffleVariant,  IconHeadphones } from "@iconify-prerendered/vue-mdi";
 const props = defineProps(["channel"])
 const emit = defineEmits(["edit"])
 
@@ -35,6 +43,24 @@ onMounted(async () => {
   // let res = await getDocsFromFirestore("library")
   // console.log(res);
 })
+
+const convertOffsetToDuration = (milliseconds) => {
+  const hours = Math.floor(milliseconds / 3600000);
+  const minutes = Math.floor((milliseconds % 3600000) / 60000);
+  const seconds = Math.floor((milliseconds % 60000) / 1000);
+
+  let duration = "";
+  if (hours > 0) {
+    duration += `${hours} hour${hours > 1 ? "s" : ""}`;
+  }
+  if (minutes > 0) {
+    duration += `${duration ? ", " : ""}${minutes} min${minutes > 1 ? "s" : ""}`;
+  }
+  if (seconds > 0) {
+    duration += `${duration ? ", " : ""}${seconds} sec${seconds > 1 ? "s" : ""}`;
+  }
+  return duration;
+}
 </script>
 
 
