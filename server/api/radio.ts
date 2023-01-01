@@ -27,7 +27,12 @@ export default defineEventHandler(async (event) => {
   if (query.search) {
     // @ts-ignore
     let track = searchTrack(query.search, channels)
-    track.speech = getOutputSpeech(responses, "now_playing")
+
+    if (track) {
+      track.speech = getOutputSpeech(responses, "now_playing")
+    } else {
+      track = { speech: "Sorry. I did not find " + query.search + "!"}
+    }
     return track
   }
 

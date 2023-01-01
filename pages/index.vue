@@ -1,7 +1,7 @@
 <template>
 	<div>
 
-		<AppStats v-if="library && library.channels && library.channels.length && !pending" :items="library.channels"/>
+		<AppStats v-if="library && library.channels && library.channels.length && !pending" :items="library.channels" :recentlyPlayed="library.recentlyPlayed"/>
 
 		<div v-if="library && library.channels && library.channels.length" class="max-w-xl mx-auto text-center">
 

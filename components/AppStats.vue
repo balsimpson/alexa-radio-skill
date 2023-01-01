@@ -22,7 +22,7 @@
       <!-- Stats -->
       <!-- End Stats -->
     </div>
-    <div v-if="recentlyPlayed" class="flex justify-center p-3 py-6 mt-6 text-center border-t border-b border-stone-800">
+    <div v-if="recentlyPlayed" class="flex justify-center p-3 py-6 mt-6 text-center border-t border-b border-stone-800 animate-fadeIn">
       <div>
         <h4 class="font-semibold text-gray-800 dark:text-gray-200">Recently Played</h4>
         <p class="text-lg font-bold text-violet-400 sm:mt-3 sm:text-xl">{{ recentlyPlayed.name }}</p>
