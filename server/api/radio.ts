@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
-import { getDocsFromFirestore, getDocFromFirestore, updateDocInFirestore } from "~~/composables/useFirebase";
+import { getDocsFromFirestore, getDocFromFirestore, updateDocInFirestore, setDocInFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
-import { getNextTrack, searchTrack, getUpdatedChannel, getOutputSpeech } from "~~/composables/useRadio"
+import { getNextTrack, searchTrack, getUpdatedChannel, getOutputSpeech, getStation } from "~~/composables/useRadio"
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()
@@ -60,12 +60,12 @@ export default defineEventHandler(async (event) => {
     })
 
     let speech = getOutputSpeech(responses, "stop_playing")
-    
+
     if (speech) {
       return { speech }
     } else {
       return "Goodbye!"
+
     }
-    
   }
 })
