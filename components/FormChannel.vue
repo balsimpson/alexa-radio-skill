@@ -18,42 +18,44 @@
         <IconX />
       </button>
     </div>
-    <div class="relative flex-auto p-2 overflow-y-auto text-gray-400">
+    <div class="relative flex-auto p-2 overflow-y-auto text-stone-400">
 
       <div class="p-3">
-        <label class="block mb-1 text-sm font-bold" for="name">
+        <label class="block mb-1 text-sm" for="name">
           What is the name of your Channel?
         </label>
         <input
           @keypress.enter="addStation(stationName, stationURL)"
-          class="w-full px-3 py-2 leading-tight text-gray-400 border rounded shadow appearance-none border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
+          class="form-input"
           type="text" placeholder="Enter channel name" v-model="item.name" />
       </div>
 
-      <div class="p-2 px-3 mt-3 border-t border-stone-600">
-        <h3 class="flex items-center text-xl font-bold">
+      <div class="p-2 px-3 pt-4 mt-3 transition-opacity border-t border-stone-600"
+      :class="[item.name ? 'opacity-100' : 'opacity-40']"
+      >
+        <h3 class="flex items-center text-xl font-bold opacity-60">
           <IconAddToQueue />
           <span class="ml-3">Add a station</span>
         </h3>
-        <p class="text-sm ">
+        <p class="text-sm opacity-60">
           You can add as many stations as you want to a channel.
         </p>
         <div class="mt-4">
-          <label class="block mb-1 text-sm font-bold" for="name">
+          <label class="block mb-1 text-sm " for="name">
             What is the name of the Station?
           </label>
           <input
             @keypress.enter="addStation(stationName, stationURL)"
-            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
+            class="form-input"
             type="text" placeholder="Enter station name" v-model="stationName" />
         </div>
         <div class="mt-2">
-          <label class="block mb-1 text-sm font-bold" for="name">
+          <label class="block mb-1 text-sm" for="name">
             What is the URL of the Station?
           </label>
           <input
           @keypress.enter="addStation(stationName, stationURL)"
-            class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none text-stone-400 border-stone-600 focus:outline-none focus:shadow-outline bg-stone-700 placeholder-stone-500"
+            class="form-input"
             type="url" placeholder="Enter station URL" v-model="stationURL" />
         </div>
         <button @click.prevent="addStation(stationName, stationURL)"
@@ -61,8 +63,7 @@
           :class="[(stationName && stationURL) ? 'opacity-100' : 'opacity-50 pointer-events-none']">Add Station</button>
       </div>
 
-
-      <div class="p-4 mt-4 border-t border-stone-600">
+      <div class="p-4 mt-4 border-t border-stone-800">
         <h3 class="text-lg font-bold text-gray-500 ">
           Stations <span v-if="addedStations?.length > 0" class="px-2 ml-2 text-white rounded bg-cyan-800 ">{{
               addedStations?.length
@@ -89,11 +90,11 @@
 
         </div>
         <div v-else>
-          <div class="flex mt-3 space-x-3">
+          <div class="flex mt-3 space-x-3 opacity-50">
             <IconInfoSquare />
             <div>No Stations Added</div>
           </div>
-          <p class="text-sm italic">Use the form above to add a station.</p>
+          <p class="text-sm italic opacity-50">Use the form above to add a station.</p>
         </div>
       </div>
     </div>
@@ -114,12 +115,12 @@
       </button>
       <button v-if="item.uid" @click="updateChannel(item)" type="button"
         class="sm:inline-block w-full px-6 py-2.5 bg-teal-600 text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-700 hover:shadow-lg focus:bg-teal-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-800 active:shadow-lg transition duration-150 ease-in-out"
-        :class="[(item.name && item.stations?.length > 0) ? 'opacity-100' : 'opacity-50 pointer-events-none']">
+        :class="[(item.name && item.stations?.length > 0) ? 'opacity-100' : 'opacity-30 pointer-events-none']">
         {{ item.uid ? 'Update Channel' : 'Add Channel' }}
       </button>
       <button v-else @click="addChannel(item)" type="button"
         class="sm:inline-block w-full px-6 py-2.5 bg-cyan-600 text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:bg-cyan-700 hover:shadow-lg focus:bg-cyan-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-cyan-800 active:shadow-lg transition duration-150 ease-in-out"
-        :class="[(item.name && addedStations?.length > 0) ? 'opacity-100' : 'opacity-50 pointer-events-none']">
+        :class="[(item.name && addedStations?.length > 0) ? 'opacity-100' : 'opacity-30 pointer-events-none']">
         {{ item.uid ? 'Update Channel' : 'Add Channel' }}
       </button>
 

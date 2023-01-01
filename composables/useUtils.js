@@ -160,6 +160,9 @@ export const observeElements = (elements) => {
         // Element is in view, do something with it here
         // console.log(entry)
         entry.target.classList.add("visible")
+      } else {
+        entry.target.classList.toggle("visible")
+
       }
     });
   });

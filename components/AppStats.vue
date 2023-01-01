@@ -66,23 +66,23 @@ onMounted(() => {
   /* Add your styles for the items here */
   /* Initialize the item to be hidden */
   opacity: 0;
-  transform: translateX(10px);
+  transform: translateY(-20px);
   transition: opacity 0.5s, transform 0.5s;
 }
 
 /* Show the item when the visibility flag is set to true */
 .item.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
-@keyframes fadeInRight {
+@keyframes fadeInTop {
   from {
-    transform: translateX(100px);
+    transform: translateY(100px);
     opacity: 0;
   }
   to {
-    transform: translateX(0px);
+    transform: translateY(0px);
     opacity: 1;
   }
 }

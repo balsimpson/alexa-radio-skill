@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 // import { getAuth } from "firebase/auth";
 import { getDocsFromFirestore, getDocFromFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
-import { getNextTrack, searchTrack, getUpdateLibrary } from "~~/composables/useRadio"
+import { getNextTrack, searchTrack } from "~~/composables/useRadio"
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig()

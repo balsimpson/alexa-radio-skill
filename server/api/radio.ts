@@ -45,9 +45,27 @@ export default defineEventHandler(async (event) => {
   if (query.stop) {
     // let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
     let channelToUpdate = getUpdatedChannel(query.stop, query.offset, channels)
+
+    // @ts-ignore
+    let station = getStation(query.stop.split("::")[1], channels)
     // update doc in firestore
     let res = await updateDocInFirestore("channels", channelToUpdate.uid, channelToUpdate)
+
+    let res1 = await setDocInFirestore("alexa", "recentlyPlayed", {
+      channel: channelToUpdate.name,
+      name: station.name,
+      url: station.url,
+      offset: station.offset,
+      lastUpdated: Date.now()
+    })
+
     let speech = getOutputSpeech(responses, "stop_playing")
-    return { speech }
+    
+    if (speech) {
+      return { speech }
+    } else {
+      return "Goodbye!"
+    }
+    
   }
 })

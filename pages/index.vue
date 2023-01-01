@@ -71,6 +71,8 @@ const addChannel = async (data) => {
 	let res = await addDocToFirestore("channels", data);
 	isModalActive.value = !isModalActive.value;
 	console.log(data, res);
+	refresh()
+	showToast(`${data.name} added`)
 }
 
 const showModal = (val) => {
@@ -83,6 +85,8 @@ const deleteChannel = async (id) => {
 	let res = await deleteDocFromFirestore("channels", id);
 	console.log(res)
 	isModalActive.value = !isModalActive.value;
+	refresh()
+	// showToast(`${channel.name} upated`)
 }
 
 const updateChannel = async (channel) => {
