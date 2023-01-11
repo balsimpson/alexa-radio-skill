@@ -12,8 +12,8 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
 
   const firebaseConfig = {
-    apiKey: config.FIREBASE_API_KEY,
-    projectId: config.FIREBASE_PROJECT_ID,
+    apiKey: config.private.FIREBASE_API_KEY,
+    projectId: config.private.FIREBASE_PROJECT_ID,
   };
 
   // Initialize Firebase
