@@ -23,7 +23,7 @@
           </div>
           <div v-if="station.offset && station.offset > 0" class="inline-flex items-center justify-center px-3 py-1 text-xs text-indigo-500 border border-indigo-500 rounded-full sm:ml-3"><IconHeadphones class="text-white/40"/><span class="ml-1">{{convertOffsetToDuration(station.offset)}}</span></div>
 
-          
+          <!-- <pre>{{ station }}</pre> -->
         </div>
         <div class="text-sm text-gray-600 break-words">{{ station.url }}</div>
       </div>

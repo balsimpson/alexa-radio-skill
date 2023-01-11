@@ -97,13 +97,13 @@ const updateChannel = async (channel) => {
 	let res = await updateDocInFirestore("channels", channel.uid, channel)
 	console.log(res)
 	isModalActive.value = !isModalActive.value;
-	refresh()
+	// refresh()
 	showToast(`${channel.name} upated`)
 }
 
 const showToast = (msg) => {
 	toast(msg, {
-		timeout: 50000,
+		timeout: 5000,
 		toastClassName: "bg-purple-600",
 		bodyClassName: ["font-bold"]
 	});
@@ -112,12 +112,11 @@ const showToast = (msg) => {
 onMounted(async () => {
 	const db = getFirestore();
 	const q = query(collection(db, "channels"));
-	const unsubscribe = onSnapshot(q, (querySnapshot) => {
-
+	onSnapshot(q, (querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 			library.value.push(doc.data());
 		});
-		console.log("Data: ", library.value);
+		console.log("Data: 	Updated");
 	});
 });
 </script>
