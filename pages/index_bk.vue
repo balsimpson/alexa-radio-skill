@@ -1,12 +1,9 @@
 <template>
 	<div>
 
-		<!-- <pre>{{ library }}</pre> -->
+		<AppStats v-if="library && library.channels && library.channels.length && !pending" :items="library.channels" :recentlyPlayed="library.recentlyPlayed"/>
 
-		<AppStats v-if="library && library.length" :items="library" :recentlyPlayed="library.recentlyPlayed" />
-
-		<div v-if="library && library.length" class="max-w-xl mx-auto text-center">
-
+		<div v-if="library && library.channels && library.channels.length" class="max-w-xl mx-auto text-center">
 
 			<div class="flex items-center justify-between px-3 pt-12 pb-6">
 				<div class="text-2xl font-bold text-purple-100 font-arvo">Channels
@@ -21,7 +18,7 @@
 			</div>
 			<div class="pb-12 text-left">
 				<div class="space-y-6">
-					<ChannelCard @edit="showModal($event)" v-for="channel in library" :channel="channel" />
+					<ChannelCard @edit="showModal($event)" v-for="channel in library.channels" :channel="channel" />
 				</div>
 			</div>
 		</div>
@@ -37,7 +34,7 @@
 			</div>
 		</div>
 
-
+		
 		<AppModalTest :is-active="isModalActive">
 			<FormChannel @close="isModalActive = !isModalActive" @delete="deleteChannel" @add="addChannel($event)"
 				@update="updateChannel($event)" :item="channelToEdit" />
@@ -46,7 +43,7 @@
 </template>
 
 <script setup>
-import { getFirestore, doc, onSnapshot, query, collection } from "firebase/firestore";
+import { collection, getFirestore, doc, query, onSnapshot, orderBy } from "firebase/firestore"
 import { IconXCircle, IconX, IconAlbum, IconBxAlbum, IconMenu, IconPlus } from "@iconify-prerendered/vue-bx";
 import { IconMusicBoxMultiple, IconPlusBoxMultiple, IconMusicNote, IconMusic } from "@iconify-prerendered/vue-mdi";
 // import draggable from 'vuedraggable'
@@ -63,12 +60,11 @@ const channelToEdit = ref({})
 const channelCount = ref(0)
 const stationCount = ref(0)
 
-const library = ref([])
 
-// const { data: library, pending, error, refresh } = await useAsyncData(
-// 	'library',
-// 	() => $fetch('/api/library')
-// )
+const { data: library, pending, error, refresh } = await useAsyncData(
+  'library',
+  () => $fetch('/api/library')
+)
 
 const addChannel = async (data) => {
 
@@ -108,23 +104,11 @@ const showToast = (msg) => {
 		bodyClassName: ["font-bold"]
 	});
 }
-
-onMounted(async () => {
-	const db = getFirestore();
-	const q = query(collection(db, "channels"));
-	const unsubscribe = onSnapshot(q, (querySnapshot) => {
-
-		querySnapshot.forEach((doc) => {
-			library.value.push(doc.data());
-		});
-		console.log("Data: ", library.value);
-	});
-});
 </script>
 
 <style>
 .Vue-Toastification__toast--default {
-	background-color: #582287;
-	color: #fff;
+    background-color: #582287;
+    color: #fff;
 }
 </style>
