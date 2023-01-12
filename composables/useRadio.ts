@@ -122,6 +122,7 @@ export const getUpdatedChannel = (token: string, offset: number, channels: []) =
     name: station.name,
     url: station.url,
     offset: offset || 0,
+    channel: channel[0].name
   }
 
   return channel[0]
