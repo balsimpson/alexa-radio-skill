@@ -47,18 +47,25 @@ export const searchTrack = (query: string, channels: { name: any; stations: any[
   let searchChannels = fuzzy(channels, 'name');
   let channel = searchChannels(query)
   let station = getStation(query, channels)
+  let track;
   // get channel
   // If a channel matches the search term, it takes priority over station match
   // if recentlyPlayed, return that
   if (channel && channel.length > 0) {
     if (channel[0].recentlyPlayed) {
-      return channel[0].recentlyPlayed
+      track = channel[0].recentlyPlayed
+      track.channel = channel[0].name
+      return track
     } else if (channel[0].shuffle) {
+      track = randomItem(channel[0].stations)
+      track.channel = channel[0].name
       // else if shuffle is on, return random station
-      return randomItem(channel[0].stations)
+      return track
     } else {
       // else return first station 
-      return channel[0].stations[0]
+      track = channel[0].stations[0]
+      track.channel = channel[0].name
+      return track
     }
   } 
   // else check if station was found
@@ -69,8 +76,8 @@ export const searchTrack = (query: string, channels: { name: any; stations: any[
 }
 
 export const getStation = (stationName: any, channels: { name: any; stations: any[]; }[]) => {
+  // @ts-ignore
   let allStations = []
-
   channels.map((channel: { name: any; stations: any[]; }) => {
     let channelName = channel.name
     channel.stations.map(station => {
@@ -85,7 +92,6 @@ export const getStation = (stationName: any, channels: { name: any; stations: an
   if (station && station.length > 0) {
     return station[0]
   }
-
 }
 
 export const getUpdatedChannel = (token: string, offset: number, channels: []) => {
