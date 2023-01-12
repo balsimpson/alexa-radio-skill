@@ -49,7 +49,7 @@ const stopTrackHandler = async (channels: [], stopTrack: string, offset: number,
   if (speech) {
     return { speech };
   } else {
-    return "Goodbye!";
+    return {speech: "Goodbye!"};
   }
 }
 
@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
     apiKey: config.private.FIREBASE_API_KEY,
     projectId: config.private.FIREBASE_PROJECT_ID,
   });
-  
+
   const channels = await getDocsFromFirestore("channels");
   const responses = await getDocFromFirestore("alexa", "responses");
 
