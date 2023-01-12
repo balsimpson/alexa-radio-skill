@@ -114,7 +114,7 @@ export const getUpdatedChannel = (token: string, offset: number, channels: []) =
   channel[0].recentlyPlayed = {
     name: station.name,
     url: station.url,
-    offset: station.offset || 0,
+    offset: offset || 0,
   }
 
   return channel[0]
