@@ -96,8 +96,8 @@ const deleteChannel = async (id) => {
 const updateChannel = async (channel) => {
 	let res = await updateDocInFirestore("channels", channel.uid, channel)
 	console.log(res)
-	isModalActive.value = !isModalActive.value;
 	refresh()
+	isModalActive.value = !isModalActive.value;
 	showToast(`${channel.name} upated`)
 }
 

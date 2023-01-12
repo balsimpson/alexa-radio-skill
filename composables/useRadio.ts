@@ -1,6 +1,6 @@
 import { fuzzy, randomItem, filterArray } from "~~/composables/useUtils"
 
-export const getNextTrack = (channels, token: any) => {
+export const getNextTrack = (channels: unknown, token: any) => {
   if (!channels || !token) return
 
   // console.log(channels, token)
@@ -77,7 +77,7 @@ export const searchTrack = (query: string, channels: { name: any; stations: any[
 
 export const getStation = (stationName: any, channels: { name: any; stations: any[]; }[]) => {
   // @ts-ignore
-  let allStations = []
+  let allStations: any[] = []
   channels.map((channel: { name: any; stations: any[]; }) => {
     let channelName = channel.name
     channel.stations.map(station => {
@@ -138,6 +138,7 @@ export const getUpdatedChannel = (token: string, offset: number, channels: []) =
   // }dsdsdsdsdsdsdsadsaaaadsdsdsdsdsdsewfg`§tyf§§§§§§§§§§§§dsdsdsdsdsds
 }
 
-export const getOutputSpeech = (responses, type) => {
+export const getOutputSpeech = (responses: [], type: string) => {
+  // @ts-ignore
   return randomItem(responses[type])
 }
