@@ -23,5 +23,6 @@ export default defineEventHandler(async (event) => {
   const channels = await getDocsFromFirestore("channels");
   const recentlyPlayed = await getDocFromFirestore("alexa", "recentlyPlayed")
 
-  return { channels, recentlyPlayed }
+  // return { channels, recentlyPlayed }
+  return channels
 })

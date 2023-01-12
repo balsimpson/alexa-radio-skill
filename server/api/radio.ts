@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-// import { getAuth } from "firebase/auth";
 import { getDocsFromFirestore, getDocFromFirestore, updateDocInFirestore, setDocInFirestore } from "~~/composables/useFirebase";
 import { fuzzy, randomItem } from "~~/composables/useUtils"
 import { getNextTrack, searchTrack, getUpdatedChannel, getOutputSpeech, getStation } from "~~/composables/useRadio"
@@ -49,6 +48,7 @@ export default defineEventHandler(async (event) => {
   // Stop
   if (query.stop) {
     // let updatedLibrary = getUpdateLibrary(query.stop, query.offset, channels)
+    // @ts-ignore
     let channelToUpdate = getUpdatedChannel(query.stop, query.offset, channels)
 
     // @ts-ignore

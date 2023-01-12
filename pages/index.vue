@@ -63,12 +63,12 @@ const channelToEdit = ref({})
 const channelCount = ref(0)
 const stationCount = ref(0)
 
-const library = ref([])
+// const library = ref([])
 
-// const { data: library, pending, error, refresh } = await useAsyncData(
-// 	'library',
-// 	() => $fetch('/api/library')
-// )
+const { data: library, pending, error, refresh } = await useAsyncData(
+	'library',
+	() => $fetch('/api/library')
+)
 
 const addChannel = async (data) => {
 
@@ -97,7 +97,7 @@ const updateChannel = async (channel) => {
 	let res = await updateDocInFirestore("channels", channel.uid, channel)
 	console.log(res)
 	isModalActive.value = !isModalActive.value;
-	// refresh()
+	refresh()
 	showToast(`${channel.name} upated`)
 }
 
@@ -112,11 +112,16 @@ const showToast = (msg) => {
 onMounted(async () => {
 	const db = getFirestore();
 	const q = query(collection(db, "channels"));
-	onSnapshot(q, (querySnapshot) => {
+	let channels  = []
+	onSnapshot(q, async (querySnapshot) => {
 		querySnapshot.forEach((doc) => {
-			library.value.push(doc.data());
+			// library.value.push(doc.data());
+			channels.push(doc.data());
 		});
-		console.log("Data: 	Updated");
+		console.log("Data: 	Updated", library.value);
+		// await nextTick()
+		library.value = channels;
+		refresh()
 	});
 });
 </script>
