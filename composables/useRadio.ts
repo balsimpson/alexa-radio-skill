@@ -106,6 +106,7 @@ export const getUpdatedChannel = (token: string, offset: number, channels: []) =
     if (station.name == stationName) {
       // update the offset
       station.offset = offset
+      break
       // console.log("offset", stationName)
     }
   }
