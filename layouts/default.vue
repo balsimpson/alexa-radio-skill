@@ -1,25 +1,18 @@
 <template>
   <div class="w-full min-h-screen text-stone-300">
-    <div class="sticky top-0 z-20 px-4 py-6 sm:px-6 lg:px-8 ">
+    <div class="px-4 py-6 sm:px-6 lg:px-8 ">
       <nav class="relative flex items-center justify-between max-w-4xl mx-auto " aria-label="Global">
-        <!-- <IconRadio class="w-12 h-12" /> -->
         <NuxtLink to="/">
           <img src="/favicon.png" alt="" class="w-12">
         </NuxtLink>
-
         <div class="flex items-center space-x-6 text-purple-700/70">
           <NuxtLink to="/help">
             <IconBxHelpCircle class="w-12 h-12 transition hover:text-purple-600" />
           </NuxtLink>
-
           <NuxtLink to="/settings">
             <IconCog class="w-12 h-12 transition hover:-rotate-12 hover:text-purple-600" />
           </NuxtLink>
-
         </div>
-
-
-
       </nav>
     </div>
     <slot />

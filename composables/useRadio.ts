@@ -1,22 +1,16 @@
 import { fuzzy, randomItem, filterArray } from "~~/composables/useUtils"
 
-export const getNextTrack = (channels: unknown, token: any) => {
+export const getNextTrack = (channels: [], token: string) => {
   if (!channels || !token) return
 
-  // console.log(channels, token)
-
   let stationName = token.split('::')[1]
-
   let searchChannels = fuzzy(channels, 'name');
   let channel = searchChannels(token.split('::')[0])
   channel = channel[0]
-
   let nextTrack = {};
-
   if (channel.shuffle) {
     // get random station, but not the one currently playing
     let tracks = filterArray(channel.stations, stationName);
-
     if (tracks.length > 0) {
       nextTrack = randomItem(tracks)
     }
@@ -33,10 +27,10 @@ export const getNextTrack = (channels: unknown, token: any) => {
           break;
         }
       }
-
     }
   }
 
+  // @ts-ignore
   nextTrack["channel"] = channel.name
   return nextTrack
 }
@@ -67,7 +61,7 @@ export const searchTrack = (query: string, channels: { name: any; stations: any[
       track.channel = channel[0].name
       return track
     }
-  } 
+  }
   // else check if station was found
   // @ts-ignore
   else if (station) {
@@ -116,7 +110,7 @@ export const getUpdatedChannel = (token: string, offset: number, channels: []) =
       // console.log("offset", stationName)
     }
   }
-  
+
   // update channel with recentlyPlayed
   channel[0].recentlyPlayed = {
     name: station.name,

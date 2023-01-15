@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <div class="mr-2 text-2xl font-bold text-gray-400">{{ channel.name }}
-          
+
         </div>
         <IconShuffleVariant v-if="channel.shuffle" class="w-6 h-6 text-purple-300 opacity-30" />
       </div>
@@ -19,9 +19,20 @@
     <div class="mt-2 space-y-2">
       <div v-for="station in channel.stations" class="w-full p-3 rounded bg-stone-800/80 ">
         <div class="flex flex-col items-start w-full sm:flex-row">
-          <div class="flex items-center text-xl font-semibold tracking-wide text-gray-400 break-words">{{ station.name }}
+          <div class="flex items-center text-xl font-semibold tracking-wide text-gray-400 break-words">{{
+            station.name
+          }}
           </div>
-          <div v-if="station.offset && station.offset > 0" class="inline-flex items-center justify-center px-3 py-1 text-xs text-indigo-500 border border-indigo-500 rounded-full sm:ml-3"><IconHeadphones class="text-white/40"/><span class="ml-1">{{convertOffsetToDuration(station.offset)}}</span></div>
+          <div v-if="station.offset && station.offset > 0"
+            class="inline-flex items-center justify-center px-3 py-1 text-xs text-indigo-500 border border-indigo-500 rounded-full sm:ml-3">
+            <!-- <IconHeadphones class="text-white/40"/> -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-4 h-4 text-white/40">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+            </svg>
+            <span class="ml-1">{{ convertOffsetToDuration(station.offset) }}</span>
+          </div>
 
           <!-- <pre>{{ station }}</pre> -->
         </div>
@@ -32,7 +43,7 @@
 </template>
 
 <script setup>
-import { IconMusicBoxMultiple, IconEditBoxOutline, IconShuffleVariant,  IconHeadphones } from "@iconify-prerendered/vue-mdi";
+import { IconMusicBoxMultiple, IconEditBoxOutline, IconShuffleVariant, IconHeadphones } from "@iconify-prerendered/vue-mdi";
 const props = defineProps(["channel"])
 const emit = defineEmits(["edit"])
 
