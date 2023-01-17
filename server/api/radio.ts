@@ -60,14 +60,14 @@ const launchTrackHandler = async (channels: [], responses: []) => {
     if (recentlyPlayed) {
       return {
         recentlyPlayed,
-        speech: getOutputSpeech(responses, "launch")
+        speech: "Welcome"
       };
     } else {
       // get random channel
       let randomTrack = getRandomTrack(channels);
       return {
-        recentlyPlayed,
-        speech: getOutputSpeech(responses, "launch")
+        randomTrack,
+        speech: "Welcome"
       };
     }
   } else {

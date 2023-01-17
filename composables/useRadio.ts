@@ -11,7 +11,7 @@ export const getNextTrack = (channels: [], token: string) => {
   if (channel.shuffle) {
     // get random station, but not the one currently playing
     let tracks = filterArray(channel.stations, stationName);
-    if (tracks.length > 0) {
+    if (tracks && tracks.length > 0) {
       nextTrack = randomItem(tracks)
     }
   } else {
