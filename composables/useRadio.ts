@@ -129,7 +129,27 @@ export const getUpdatedChannel = (token: string, offset: number, channels: []) =
   //     offset: station[0].offset,
   //     channel: channel[0].name
   //   }
-  // }dsdsdsdsdsdsdsadsaaaadsdsdsdsdsdsewfg`§tyf§§§§§§§§§§§§dsdsdsdsdsds
+  // 
+}
+
+export const getRandomTrack = (channels: []) => {
+  let randomChannelIndex = Math.floor(Math.random() * channels.length);
+  let randomChannel: {recentlyPlayed: {}, stations: []} = channels[randomChannelIndex];
+  
+  // if shuffle on 
+  // @ts-ignore
+  let randomStationIndex = Math.floor(Math.random() * randomChannel?.stations.length);
+  // @ts-ignore
+  let randomStation = randomChannel.stations[randomStationIndex];
+  // else
+  // if there is recentlyPlayed
+  if (randomChannel.recentlyPlayed) {
+    return randomChannel.recentlyPlayed
+  } else {
+    // retun first track
+    // ts-ignore
+    return randomChannel?.stations[0]
+  }
 }
 
 export const getOutputSpeech = (responses: [], type: string) => {

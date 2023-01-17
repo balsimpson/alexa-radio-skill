@@ -79,6 +79,8 @@ const showModal = (val) => {
 	isModalActive.value = !isModalActive.value;
 }
 
+
+
 const addChannel = async (data) => {
 	isSaving.value = true;
 	let res = await addDocToFirestore("channels", data);

@@ -49,10 +49,49 @@ const stopTrackHandler = async (channels: [], stopTrack: string, offset: number,
   if (speech) {
     return { speech };
   } else {
-    return {speech: "Goodbye!"};
+    return { speech: "Goodbye!" };
   }
 }
 
+const launchTrackHandler = async (channels: [], responses: []) => {
+  const recentlyPlayed = await getDocFromFirestore("alexa", "recentlyPlayed");
+  // if alexa/reventlyPlayed is populated, resume it
+  if (channels.length > 0) {
+    if (recentlyPlayed) {
+      return {
+        recentlyPlayed,
+        speech: getOutputSpeech(responses, "launch")
+      };
+    } else {
+      // get random channel
+      let randomTrack = getRandomTrack(channels);
+      return {
+        recentlyPlayed,
+        speech: getOutputSpeech(responses, "launch")
+      };
+    }
+  } else {
+    return {
+      speech: `Please add a channel!`
+    };
+  }
+}
+
+const resumeTrackHandler = async (channels: [], responses: []) => {
+  const recentlyPlayed = await getDocFromFirestore("alexa", "recentlyPlayed");
+  // if alexa/reventlyPlayed is populated, resume it
+  if (recentlyPlayed) {
+    return {
+      recentlyPlayed,
+      speech: getOutputSpeech(responses, "launch")
+    };
+  } else {
+    // get random channel
+    return {
+      speech: `Nothing to resume!`
+    };
+  }
+}
 
 // add another function that logs playback status like streaming, stopped, failed when query.playback
 const logPlaybackStatus = (status: string) => {
@@ -72,8 +111,18 @@ const logPlaybackStatus = (status: string) => {
   }
 }
 
+
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event);
+  interface Query {
+    launch?: string;
+    search?: string;
+    queue?: string;
+    resume?: string;
+    stop?: string;
+    playback?: string;
+    offset?: number;
+  }
+  const query = getQuery(event) as Query;
   const config = useRuntimeConfig();
 
   const app = initializeApp({
@@ -81,29 +130,23 @@ export default defineEventHandler(async (event) => {
     projectId: config.private.FIREBASE_PROJECT_ID,
   });
 
-  const channels = await getDocsFromFirestore("channels");
-  const responses = await getDocFromFirestore("alexa", "responses");
+  const channels: any = await getDocsFromFirestore("channels");
+  const responses: any = await getDocFromFirestore("alexa", "responses");
 
-  if (query.search) {
-    return searchTrackHandler(
-      // @ts-ignore
-      query.search, channels, responses);
-    }
-    
-    if (query.queue) {
-      // @ts-ignore
-      return nextTrackHandler(channels, query.queue, responses);
-    }
-    
-    if (query.stop) {
-    // @ts-ignore
-    return stopTrackHandler(channels, query.stop, query.offset, responses);
-  }
-
-  if (query.playback) {
-    // @ts-ignore
-    // playback token is in the format status__token
-    // e.g. failed__GTA Radio::Blonded
+  if (query.launch) {
+    return launchTrackHandler(channels, responses);
+  } else if (query.search) {
+    return searchTrackHandler(query.search, channels, responses);
+  } else if (query.queue) {
+    return nextTrackHandler(channels, query.queue, responses);
+  } else if (query.resume) {
+    return resumeTrackHandler(channels, responses);
+  } else if (query.stop) {
+    return stopTrackHandler(channels, query.stop, query.offset || 0, responses);
+  } else if (query.playback) {
     logPlaybackStatus(query.playback);
   }
 });
+
+
+
