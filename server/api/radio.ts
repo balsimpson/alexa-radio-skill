@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDocsFromFirestore, getDocFromFirestore, updateDocInFirestore, setDocInFirestore } from "~~/composables/useFirebase";
-import { getNextTrack, searchTrack, getUpdatedChannel, getOutputSpeech, getStation } from "~~/composables/useRadio"
+import { getNextTrack, getRandomTrack, searchTrack, getUpdatedChannel, getOutputSpeech, getStation } from "~~/composables/useRadio"
 
 const searchTrackHandler = (searchTerm: string, channels: [], responses: []) => {
   let track = searchTrack(searchTerm, channels);
