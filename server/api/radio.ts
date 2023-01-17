@@ -58,6 +58,7 @@ const launchTrackHandler = async (channels: [], responses: []) => {
   // if alexa/reventlyPlayed is populated, resume it
   if (channels.length > 0) {
     if (recentlyPlayed) {
+      console.log("recentlyPlayed", recentlyPlayed)
       return {
         recentlyPlayed,
         speech: "Welcome"
@@ -65,12 +66,14 @@ const launchTrackHandler = async (channels: [], responses: []) => {
     } else {
       // get random channel
       let randomTrack = getRandomTrack(channels);
+      console.log("randomTrack", randomTrack)
       return {
         randomTrack,
         speech: "Welcome"
       };
     }
   } else {
+    console.log("else")
     return {
       speech: `Please add a channel!`
     };
