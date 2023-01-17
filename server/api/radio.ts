@@ -60,7 +60,7 @@ const launchTrackHandler = async (channels: [], responses: []) => {
     if (recentlyPlayed) {
       console.log("recentlyPlayed", recentlyPlayed)
       return {
-        recentlyPlayed,
+        track: recentlyPlayed,
         speech: "Welcome"
       };
     } else {
@@ -68,7 +68,7 @@ const launchTrackHandler = async (channels: [], responses: []) => {
       let randomTrack = getRandomTrack(channels);
       console.log("randomTrack", randomTrack)
       return {
-        randomTrack,
+        track: randomTrack,
         speech: "Welcome"
       };
     }
